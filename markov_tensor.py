@@ -15,10 +15,8 @@ FXTens の Python による表現
 
 import numpy as np
 import pandas as pd
-import datetime
 
 DEBUG = False
-
 
 def get_lattice_points(strand):
     """
@@ -76,7 +74,7 @@ def composition(tensor_x, tensor_y):
         # tensor_x.pop("profile")
         # tensor_y.pop("profile")
         for strand_x in [item for item in list(tensor_x.keys()) if item != "profile"]:
-            for strand_y in [item for item in list(tensor_x.keys()) if item != "profile"]:
+            for strand_y in [item for item in list(tensor_y.keys()) if item != "profile"]:
                 strand_from_x, strand_to_x = get_lattice_points(strand_x)
                 strand_from_y, strand_to_y = get_lattice_points(strand_y)
                 # 結合演算の結果のストランドの重みを算出
@@ -133,6 +131,13 @@ def main():
     #     "[[2, 2], [2, 2]]": 0.25
     #   }
 
+
+    tensor_ = {
+        "profile": [[], [2]],
+        "[[], [1]]": 0.3,
+        "[[], [2]]": 0.7,
+    }
+
     tensor_x = {
         "profile": [[2], [2]],
         "[[1], [1]]": 0.3,
@@ -148,6 +153,14 @@ def main():
         "[[2], [1]]": 0.1,
         "[[2], [2]]": 0.9,
     }
+
+    tensor_result = composition(tensor_, tensor_x)
+    print(tensor_result)
+    if is_markov(tensor_result):
+        print("this tensor is markov")
+    for key in tensor_result.keys():
+        print(key, tensor_result[key])
+
 
     tensor_result = composition(tensor_x, tensor_y)
     print(tensor_result)
