@@ -72,7 +72,7 @@ def composition(tensor_x, tensor_y):
 
     tensor_result = {}
     if check_composable(tensor_x, tensor_y):
-        tensor_result["profile"] = [tensor_x["profile"], tensor_y["profile"]]
+        tensor_result["profile"] = [tensor_x["profile"][0], tensor_y["profile"][1]]
         tensor_x.pop("profile")
         tensor_y.pop("profile")
         for strand_x in tensor_x.keys():
@@ -127,25 +127,26 @@ def main():
     "[[2, 2], [2, 2]]": 0.25
   }
 
-#   tensor_x = {
-#     "profile": [[2], [2]],  
-#     "[[1], [1]]": 0.3, 
-#     "[[1], [2]]": 0.7, 
-#     "[[2], [1]]": 0.5, 
-#     "[[2], [2]]": 0.5, 
-#   }
+  tensor_x = {
+    "profile": [[2], [2]],  
+    "[[1], [1]]": 0.3, 
+    "[[1], [2]]": 0.7, 
+    "[[2], [1]]": 0.5, 
+    "[[2], [2]]": 0.5, 
+  }
 
-#   tensor_y = {
-#     "profile": [[2], [2]],  
-#     "[[1], [1]]": 0.5, 
-#     "[[1], [2]]": 0.5, 
-#     "[[2], [1]]": 0.5, 
-#     "[[2], [2]]": 0.5, 
-#   }
+  tensor_y = {
+    "profile": [[2], [2]],  
+    "[[1], [1]]": 0.5, 
+    "[[1], [2]]": 0.5, 
+    "[[2], [1]]": 0.1, 
+    "[[2], [2]]": 0.9, 
+  }
 
   tensor_result = composition(tensor_x, tensor_y)
-  if is_markov(tensor_result):
-    print("this tensor is markov")
+  print(tensor_result)
+#   if is_markov(tensor_result):
+#     print("this tensor is markov")
 
   for key in tensor_result.keys():
       print(key, tensor_result[key])
