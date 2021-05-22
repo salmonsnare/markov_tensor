@@ -19,12 +19,6 @@ import datetime
 
 DEBUG = True
 
-def what_is_function():
-  print("Hello, world!") # コンソールに文字列表示 str -> 1 (副作用あり)
-  datetime.datetime.now() # now に隠れた引数 tz=None がある。 1 = {None},  1 -> datetime
-  raise Exception("exception") # 例外を投げる。 String -> ∅ (出力が存在しない。)
-
-
 def get_lattice_points(strand):
   """
   格子点の情報を取得
