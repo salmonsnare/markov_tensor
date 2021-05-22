@@ -87,9 +87,10 @@ def composition(tensor_x, tensor_y):
             for strand_y in tensor_y.keys():
                 strand_from_x, strand_to_x = get_lattice_points(strand_x) 
                 strand_from_y, strand_to_y = get_lattice_points(strand_y) 
-                if strand_to_x == strand_from_y:
-                    strand_result = str([strand_from_x, strand_to_y])
-                    if strand_result in tensor_result.keys():
+                # 結合演算の結果のストランドの重みを算出
+                if strand_to_x == strand_from_y: # tensor_x のあるストランドの終点と、tensor_y のあるストランドの始点が一致したばあい
+                    strand_result = str([strand_from_x, strand_to_y]) # 結合演算の結果のストランドの始点と終点の設定
+                    if strand_result in tensor_result.keys(): 
                         if DEBUG:
                             print("strand_to_x: {0}".format(strand_to_x))
                             print("strand_from_y: {0}".format(strand_from_y))
