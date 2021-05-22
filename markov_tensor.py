@@ -19,6 +19,8 @@ import datetime
 
 DEBUG = True
 
+
+
 def get_lattice_points(strand):
   """
   格子点の情報を取得
@@ -60,10 +62,6 @@ def is_markov(tensor):
     ret = ret and (total[strand_from_str] == 1.0)
       
   return ret
-
-
-  print("sum(tensor.values()): {0}".format(sum(tensor.values())))
-  return True if sum(tensor.values()) == 1.0 else False
 
 
 def composition(tensor_x, tensor_y):
