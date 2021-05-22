@@ -1,3 +1,18 @@
+"""
+FXTens の Python による表現
+
+プロファイルと、ストランドの始点と終点のインデックス (格子点) の対と
+ストランドの重みを辞書として表現。
+  tensor_x = {
+    "profile": [[2], [2]],  
+    "[[1], [1]]": 0.3, 
+    "[[1], [2]]": 0.7, 
+    "[[2], [1]]": 0.5, 
+    "[[2], [2]]": 0.5, 
+  }
+
+"""
+
 import numpy as np
 import pandas as pd
 import datetime
@@ -12,6 +27,7 @@ def what_is_function():
 
 def get_lattice_points(strand):
   """
+  格子点の情報を取得
   @param ストランドの格子点の対
   @return ストランドの格子点の始点と終点
   """
@@ -22,10 +38,19 @@ def get_lattice_points(strand):
 
 
 def check_composable(tensor_x, tensor_y):
+  """
+  2 個のテンソルが結合可能かチェック
+  @param tensor_x テンソル
+  @param tensor_y テンソル
+  """
   return True if tensor_x["profile"][1] == tensor_y["profile"][0] else False
 
 
 def is_markov(tensor):
+  """
+  マルコフ性のチェック
+  @param tensor
+  """
   tensor.pop("profile")
   total = {}
   for strand in tensor.keys():
