@@ -11,6 +11,10 @@ FXTens の Python による表現
     "[[2], [2]]": 0.5, 
   }
 
+結合演算
+恒等射
+テンソル積
+
 """
 
 import numpy as np
@@ -69,17 +73,15 @@ def composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
         # 結合演算の結果のストランドの始点と終点の設定
         # キー strand_result はストランドの始点と終点を表す格子点を表す。
         strand_result = str([strand_from_x, strand_to_y])
+        mult = round(tensor_x[strand_x] * tensor_y[strand_y], 5)
         if DEBUG:
             print("strand_to_x: {0}".format(strand_to_x))
             print("strand_from_y: {0}".format(strand_from_y))
-            print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
-                round(tensor_x[strand_x] * tensor_y[strand_y]), 5))
+            print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(mult))
         if strand_result in tensor_result.keys(): # もし既にキー strand_result に値が設定されていれば加算
-            tensor_result[strand_result] += round(tensor_x[strand_x] * \
-                tensor_y[strand_y], 5)
+            tensor_result[strand_result] += mult
         else: # もし既にキー strand_result に値が設定されていなければ設定
-            tensor_result[strand_result] = round(tensor_x[strand_x] * \
-                tensor_y[strand_y], 5)
+            tensor_result[strand_result] = mult
 
     return tensor_result
 
@@ -142,13 +144,14 @@ def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result
     strand_to.extend(strand_to_y)
 
     strand_result = str([strand_from, strand_to])
+    mult = round(tensor_x[strand_x] * tensor_y[strand_y], 5)
     if DEBUG:
         print("---")
         print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strand_x]: {2}".format(strand_from_x, strand_to_x, tensor_x[strand_x]))
         print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strand_y]: {2}".format(strand_from_y, strand_to_y, tensor_y[strand_y]))
         print("strand_from: {0}, strand_to: {1}".format(strand_from, strand_to))
-        print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(round(tensor_x[strand_x] * tensor_y[strand_y], 5)))
-    tensor_result[strand_result] = round(tensor_x[strand_x] * tensor_y[strand_y], 5)
+        print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(mult))
+    tensor_result[strand_result] = mult
 
     return tensor_result
 
