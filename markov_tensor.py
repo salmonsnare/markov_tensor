@@ -74,8 +74,9 @@ def composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
         strand_result = str([strand_from_x, strand_to_y])
         mult = round(tensor_x[strand_x] * tensor_y[strand_y], 5)
         if DEBUG:
-            print("strand_to_x: {0}".format(strand_to_x))
-            print("strand_from_y: {0}".format(strand_from_y))
+            print("---")
+            print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strand_x]: {2}".format(strand_from_x, strand_to_x, tensor_x[strand_x]))
+            print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strand_y]: {2}".format(strand_from_y, strand_to_y, tensor_y[strand_y]))
             print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(mult))
         if strand_result in tensor_result.keys(): # もし既にキー strand_result に値が設定されていれば加算
             tensor_result[strand_result] += mult
