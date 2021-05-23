@@ -143,22 +143,30 @@ def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result
     return tensor_result
 
 
+# def tensor_product(tensor_x, tensor_y):
+#     """
+#     @param tensor_x テンソル
+#     @param tensor_y テンソル
+#     """
 
-def tensor_product(tensor_x, tensor_y):
+#     tensor_result = {}
+#     tensor_result = create_profile_tensor_product(tensor_x, tensor_y, tensor_result)
+
+#     # for strand_x in [item for item in list(tensor_x.keys()) if item != "profile"]:
+#     #     for strand_y in [item for item in list(tensor_y.keys()) if item != "profile"]:
+#     #         tensor_result = composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result)
+
+#     return tensor_result
+
+
+def print_tensor(tensor):
     """
-    @param tensor_x テンソル
-    @param tensor_y テンソル
+    テンソルを標準出力に表示
+    @param tensor テンソル
     """
-
-    tensor_result = {}
-    tensor_result = create_profile_tensor_product(tensor_x, tensor_y, tensor_result)
-
-    # for strand_x in [item for item in list(tensor_x.keys()) if item != "profile"]:
-    #     for strand_y in [item for item in list(tensor_y.keys()) if item != "profile"]:
-    #         tensor_result = composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result)
-
-    return tensor_result
-
+    print("---")
+    for key in tensor.keys():
+        print(key, tensor[key])
 
 
 def main():
@@ -216,23 +224,15 @@ def main():
         "[[2], [2]]": 0.9,
     }
 
-    tensor_result = composition(tensor_domain_empty_list, identity(tensor_c))
-    print(tensor_result)
-    for key in tensor_result.keys():
-        print(key, tensor_result[key])
+    # テンソル間の演算
+    for tensor_result in [
+        composition(tensor_domain_empty_list, identity(tensor_c)), 
+        composition(tensor_a, tensor_b), 
+        composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d)
+    ]:
+        is_markov(tensor_result)           # マルコフ性のチェック
+        print_tensor(tensor_result) # テンソルを標準出力
 
-    tensor_result = composition(tensor_a, tensor_b)
-    print(tensor_result)
-    for key in tensor_result.keys():
-        print(key, tensor_result[key])
-
-    tensor_result = composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d)
-    print(tensor_result)
-    for key in tensor_result.keys():
-        print(key, tensor_result[key])
-
-    tensor_result = tensor_product(tensor_a, tensor_b)
-    tensor_result = tensor_product(tensor_c, tensor_d)
 
 if __name__ == "__main__":
     main()
