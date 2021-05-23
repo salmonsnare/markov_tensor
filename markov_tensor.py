@@ -16,7 +16,7 @@ FXTens の Python による表現
 import numpy as np
 import pandas as pd
 
-DEBUG = False
+DEBUG = True
 
 def get_lattice_points(strand):
     """
@@ -56,7 +56,7 @@ def is_markov(tensor):
     for strand_from_str in total.keys():
         ret = ret and (total[strand_from_str] == 1.0)
     if ret:
-        print("this tensor is Narkov")
+        print("this tensor is Markov")
 
     return ret
 
@@ -73,13 +73,13 @@ def composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
             print("strand_to_x: {0}".format(strand_to_x))
             print("strand_from_y: {0}".format(strand_from_y))
             print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
-                tensor_x[strand_x] * tensor_y[strand_y]))
+                round(tensor_x[strand_x] * tensor_y[strand_y]), 5))
         if strand_result in tensor_result.keys(): # もし既にキー strand_result に値が設定されていれば加算
-            tensor_result[strand_result] += tensor_x[strand_x] * \
-                tensor_y[strand_y]
+            tensor_result[strand_result] += round(tensor_x[strand_x] * \
+                tensor_y[strand_y], 5)
         else: # もし既にキー strand_result に値が設定されていなければ設定
-            tensor_result[strand_result] = tensor_x[strand_x] * \
-                tensor_y[strand_y]
+            tensor_result[strand_result] = round(tensor_x[strand_x] * \
+                tensor_y[strand_y], 5)
 
     return tensor_result
 
@@ -112,9 +112,12 @@ def identity(tensor):
 
 def create_profile_tensor_product(tensor_x, tensor_y, tensor_result):
     # テンソル積のプロファイルを作成
-    domain = tensor_x["profile"][0]
+    domain = []
+    domain.extend(tensor_x["profile"][0])
     domain.extend(tensor_y["profile"][0])
-    codomain = tensor_x["profile"][1]
+
+    codomain = []
+    codomain.extend(tensor_x["profile"][1])
     codomain.extend(tensor_y["profile"][1])
     tensor_result["profile"] = [
         domain,  # リストの連接によりプロファイルの域を作成 
@@ -123,40 +126,54 @@ def create_profile_tensor_product(tensor_x, tensor_y, tensor_result):
     return tensor_result
 
 
-# def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
-#     strand_from_x, strand_to_x = get_lattice_points(strand_x)
-#     strand_from_y, strand_to_y = get_lattice_points(strand_y)
+def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
+    """
+    テンソル積を算出するためのストランド間の計算
+    """
+    strand_from_x, strand_to_x = get_lattice_points(strand_x)
+    strand_from_y, strand_to_y = get_lattice_points(strand_y)
 
-#     strand_from = strand_from_x
-#     strand_from.extend(strand_from_y)
-#     strand_to = strand_to_x
-#     strand_to.extend(strand_to_y)
+    strand_from = []
+    strand_from.extend(strand_from_x)
+    strand_from.extend(strand_from_y)
 
-#     strand_result = str([strand_from, strand_to])
-#     if DEBUG:
-#         print("strand_to_x: {0}".format(strand_to_x))
-#         print("strand_from_y: {0}".format(strand_from_y))
-#         print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
-#             tensor_x[strand_x] * tensor_y[strand_y]))
-#     tensor_result[strand_result] = tensor_x[strand_x] * tensor_y[strand_y]
+    strand_to = []
+    strand_to.extend(strand_to_x)
+    strand_to.extend(strand_to_y)
 
-#     return tensor_result
+    strand_result = str([strand_from, strand_to])
+    if DEBUG:
+        print("---")
+        print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strand_x]: {2}".format(strand_from_x, strand_to_x, tensor_x[strand_x]))
+        print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strand_y]: {2}".format(strand_from_y, strand_to_y, tensor_y[strand_y]))
+        print("strand_from: {0}, strand_to: {1}".format(strand_from, strand_to))
+        print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(round(tensor_x[strand_x] * tensor_y[strand_y], 5)))
+    tensor_result[strand_result] = round(tensor_x[strand_x] * tensor_y[strand_y], 5)
+
+    return tensor_result
 
 
-# def tensor_product(tensor_x, tensor_y):
-#     """
-#     @param tensor_x テンソル
-#     @param tensor_y テンソル
-#     """
+def tensor_product(tensor_x, tensor_y):
+    """
+    テンソル積を算出
+    @param tensor_x テンソル
+    @param tensor_y テンソル
+    """
 
-#     tensor_result = {}
-#     tensor_result = create_profile_tensor_product(tensor_x, tensor_y, tensor_result)
+    if DEBUG:
+        print('tensor_x')
+        print_tensor(tensor_x)
+        print('tensor_y')
+        print_tensor(tensor_y)
 
-#     # for strand_x in [item for item in list(tensor_x.keys()) if item != "profile"]:
-#     #     for strand_y in [item for item in list(tensor_y.keys()) if item != "profile"]:
-#     #         tensor_result = composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result)
+    tensor_result = {}
+    tensor_result = create_profile_tensor_product(tensor_x, tensor_y, tensor_result)
 
-#     return tensor_result
+    for strand_x in [item for item in list(tensor_x.keys()) if item != "profile"]:
+        for strand_y in [item for item in list(tensor_y.keys()) if item != "profile"]:
+            tensor_result = tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result)
+
+    return tensor_result
 
 
 def print_tensor(tensor):
@@ -228,7 +245,9 @@ def main():
     for tensor_result in [
         composition(tensor_domain_empty_list, identity(tensor_c)), 
         composition(tensor_a, tensor_b), 
-        composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d)
+        composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
+        tensor_product(tensor_c, tensor_d), 
+        tensor_product(tensor_domain_empty_list, tensor_d)
     ]:
         is_markov(tensor_result)           # マルコフ性のチェック
         print_tensor(tensor_result) # テンソルを標準出力
