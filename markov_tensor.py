@@ -123,24 +123,24 @@ def create_profile_tensor_product(tensor_x, tensor_y, tensor_result):
     return tensor_result
 
 
-def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
-    strand_from_x, strand_to_x = get_lattice_points(strand_x)
-    strand_from_y, strand_to_y = get_lattice_points(strand_y)
+# def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
+#     strand_from_x, strand_to_x = get_lattice_points(strand_x)
+#     strand_from_y, strand_to_y = get_lattice_points(strand_y)
 
-    strand_from = strand_from_x
-    strand_from.extend(strand_from_y)
-    strand_to = strand_to_x
-    strand_to.extend(strand_to_y)
+#     strand_from = strand_from_x
+#     strand_from.extend(strand_from_y)
+#     strand_to = strand_to_x
+#     strand_to.extend(strand_to_y)
 
-    strand_result = str([strand_from, strand_to])
-    if DEBUG:
-        print("strand_to_x: {0}".format(strand_to_x))
-        print("strand_from_y: {0}".format(strand_from_y))
-        print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
-            tensor_x[strand_x] * tensor_y[strand_y]))
-    tensor_result[strand_result] = tensor_x[strand_x] * tensor_y[strand_y]
+#     strand_result = str([strand_from, strand_to])
+#     if DEBUG:
+#         print("strand_to_x: {0}".format(strand_to_x))
+#         print("strand_from_y: {0}".format(strand_from_y))
+#         print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
+#             tensor_x[strand_x] * tensor_y[strand_y]))
+#     tensor_result[strand_result] = tensor_x[strand_x] * tensor_y[strand_y]
 
-    return tensor_result
+#     return tensor_result
 
 
 # def tensor_product(tensor_x, tensor_y):
