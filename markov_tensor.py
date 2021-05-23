@@ -65,16 +65,17 @@ def composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
     # 結合演算の結果のストランドの重みを算出
     if strand_to_x == strand_from_y:  # tensor_x のあるストランドの終点と、tensor_y のあるストランドの始点が一致したばあい
         # 結合演算の結果のストランドの始点と終点の設定
+        # キー strand_result はストランドの始点と終点を表す格子点を表す。
         strand_result = str([strand_from_x, strand_to_y])
-        if strand_result in tensor_result.keys():
-            if DEBUG:
-                print("strand_to_x: {0}".format(strand_to_x))
-                print("strand_from_y: {0}".format(strand_from_y))
-                print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
-                    tensor_x[strand_x] * tensor_y[strand_y]))
+        if DEBUG:
+            print("strand_to_x: {0}".format(strand_to_x))
+            print("strand_from_y: {0}".format(strand_from_y))
+            print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
+                tensor_x[strand_x] * tensor_y[strand_y]))
+        if strand_result in tensor_result.keys(): # もし既にキー strand_result に値が設定されていれば加算
             tensor_result[strand_result] += tensor_x[strand_x] * \
                 tensor_y[strand_y]
-        else:
+        else: # もし既にキー strand_result に値が設定されていなければ設定
             tensor_result[strand_result] = tensor_x[strand_x] * \
                 tensor_y[strand_y]
 
@@ -87,8 +88,6 @@ def composition(tensor_x, tensor_y):
     @param tensor_y テンソル
     """
 
-    print(tensor_x, tensor_y)
-
     tensor_result = {}
     if check_composable(tensor_x, tensor_y):
         tensor_result["profile"] = [
@@ -100,6 +99,13 @@ def composition(tensor_x, tensor_y):
         print("cannot compose")
 
     return tensor_result
+
+
+def identity(tensor):
+    """
+    @param tensor テンソル
+    """
+    return tensor
 
 
 def main():
@@ -157,7 +163,7 @@ def main():
         "[[2], [2]]": 0.9,
     }
 
-    tensor_result = composition(tensor_domain_empty_list, tensor_x)
+    tensor_result = composition(tensor_domain_empty_list, identity(tensor_x))
     print(tensor_result)
     if is_markov(tensor_result):
         print("this tensor is markov")
