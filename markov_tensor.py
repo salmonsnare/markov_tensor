@@ -55,6 +55,8 @@ def is_markov(tensor):
     ret = True
     for strand_from_str in total.keys():
         ret = ret and (total[strand_from_str] == 1.0)
+    if ret:
+        print("this tensor is Narkov")
 
     return ret
 
@@ -108,38 +110,89 @@ def identity(tensor):
     return tensor
 
 
-def main():
-    #   tensor_x = {
-    #     "profile": [[2], [2, 2]],
-    #     "[[1], [1, 1]]": 0.25,
-    #     "[[1], [1, 2]]": 0.25,
-    #     "[[1], [2, 1]]": 0.25,
-    #     "[[1], [2, 2]]": 0.25,
-    #     "[[2], [1, 1]]": 0.15,
-    #     "[[2], [1, 2]]": 0.25,
-    #     "[[2], [2, 1]]": 0.35,
-    #     "[[2], [2, 2]]": 0.25
-    #   }
+def create_profile_tensor_product(tensor_x, tensor_y, tensor_result):
+    # テンソル積のプロファイルを作成
+    domain = tensor_x["profile"][0]
+    domain.extend(tensor_y["profile"][0])
+    codomain = tensor_x["profile"][1]
+    codomain.extend(tensor_y["profile"][1])
+    tensor_result["profile"] = [
+        domain,  # リストの連接によりプロファイルの域を作成 
+        codomain # リストの連接によりプロファイルの余域を作成
+    ]
+    return tensor_result
 
-    #   tensor_y = {
-    #     "profile": [[2, 2], [2, 2]],
-    #     "[[1, 1], [1, 1]]": 0.25,
-    #     "[[1, 1], [1, 2]]": 0.15,
-    #     "[[1, 1], [2, 1]]": 0.35,
-    #     "[[1, 1], [2, 2]]": 0.25,
-    #     "[[1, 2], [1, 1]]": 0.25,
-    #     "[[1, 2], [1, 2]]": 0.25,
-    #     "[[1, 2], [2, 1]]": 0.25,
-    #     "[[1, 2], [2, 2]]": 0.25,
-    #     "[[2, 1], [1, 1]]": 0.25,
-    #     "[[2, 1], [1, 2]]": 0.25,
-    #     "[[2, 1], [2, 1]]": 0.25,
-    #     "[[2, 1], [2, 2]]": 0.25,
-    #     "[[2, 2], [1, 1]]": 0.25,
-    #     "[[2, 2], [1, 2]]": 0.25,
-    #     "[[2, 2], [2, 1]]": 0.25,
-    #     "[[2, 2], [2, 2]]": 0.25
-    #   }
+
+def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
+    strand_from_x, strand_to_x = get_lattice_points(strand_x)
+    strand_from_y, strand_to_y = get_lattice_points(strand_y)
+
+    strand_from = strand_from_x
+    strand_from.extend(strand_from_y)
+    strand_to = strand_to_x
+    strand_to.extend(strand_to_y)
+
+    strand_result = str([strand_from, strand_to])
+    if DEBUG:
+        print("strand_to_x: {0}".format(strand_to_x))
+        print("strand_from_y: {0}".format(strand_from_y))
+        print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
+            tensor_x[strand_x] * tensor_y[strand_y]))
+    tensor_result[strand_result] = tensor_x[strand_x] * tensor_y[strand_y]
+
+    return tensor_result
+
+
+
+def tensor_product(tensor_x, tensor_y):
+    """
+    @param tensor_x テンソル
+    @param tensor_y テンソル
+    """
+
+    tensor_result = {}
+    tensor_result = create_profile_tensor_product(tensor_x, tensor_y, tensor_result)
+
+    # for strand_x in [item for item in list(tensor_x.keys()) if item != "profile"]:
+    #     for strand_y in [item for item in list(tensor_y.keys()) if item != "profile"]:
+    #         tensor_result = composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result)
+
+    return tensor_result
+
+
+
+def main():
+    tensor_a = {
+        "profile": [[2], [2, 2]],
+        "[[1], [1, 1]]": 0.25,
+        "[[1], [1, 2]]": 0.25,
+        "[[1], [2, 1]]": 0.25,
+        "[[1], [2, 2]]": 0.25,
+        "[[2], [1, 1]]": 0.15,
+        "[[2], [1, 2]]": 0.25,
+        "[[2], [2, 1]]": 0.35,
+        "[[2], [2, 2]]": 0.25
+    }
+
+    tensor_b = {
+        "profile": [[2, 2], [2, 2]],
+        "[[1, 1], [1, 1]]": 0.25,
+        "[[1, 1], [1, 2]]": 0.15,
+        "[[1, 1], [2, 1]]": 0.35,
+        "[[1, 1], [2, 2]]": 0.25,
+        "[[1, 2], [1, 1]]": 0.25,
+        "[[1, 2], [1, 2]]": 0.25,
+        "[[1, 2], [2, 1]]": 0.25,
+        "[[1, 2], [2, 2]]": 0.25,
+        "[[2, 1], [1, 1]]": 0.25,
+        "[[2, 1], [1, 2]]": 0.25,
+        "[[2, 1], [2, 1]]": 0.25,
+        "[[2, 1], [2, 2]]": 0.25,
+        "[[2, 2], [1, 1]]": 0.25,
+        "[[2, 2], [1, 2]]": 0.25,
+        "[[2, 2], [2, 1]]": 0.25,
+        "[[2, 2], [2, 2]]": 0.25
+    }
 
     tensor_domain_empty_list = {
         "profile": [[], [2]],
@@ -147,7 +200,7 @@ def main():
         "[[], [2]]": 0.9,
     }
 
-    tensor_x = {
+    tensor_c = {
         "profile": [[2], [2]],
         "[[1], [1]]": 0.3,
         "[[1], [2]]": 0.7,
@@ -155,7 +208,7 @@ def main():
         "[[2], [2]]": 0.5,
     }
 
-    tensor_y = {
+    tensor_d = {
         "profile": [[2], [2]],
         "[[1], [1]]": 0.4,
         "[[1], [2]]": 0.6,
@@ -163,26 +216,23 @@ def main():
         "[[2], [2]]": 0.9,
     }
 
-    tensor_result = composition(tensor_domain_empty_list, identity(tensor_x))
+    tensor_result = composition(tensor_domain_empty_list, identity(tensor_c))
     print(tensor_result)
-    if is_markov(tensor_result):
-        print("this tensor is markov")
     for key in tensor_result.keys():
         print(key, tensor_result[key])
 
-    tensor_result = composition(tensor_x, tensor_y)
+    tensor_result = composition(tensor_a, tensor_b)
     print(tensor_result)
-    if is_markov(tensor_result):
-        print("this tensor is markov")
     for key in tensor_result.keys():
         print(key, tensor_result[key])
 
-    tensor_result = composition(composition(composition(tensor_x, tensor_y), tensor_y), tensor_y)
+    tensor_result = composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d)
     print(tensor_result)
-    if is_markov(tensor_result):
-        print("this tensor is markov")
     for key in tensor_result.keys():
         print(key, tensor_result[key])
+
+    tensor_result = tensor_product(tensor_a, tensor_b)
+    tensor_result = tensor_product(tensor_c, tensor_d)
 
 if __name__ == "__main__":
     main()
