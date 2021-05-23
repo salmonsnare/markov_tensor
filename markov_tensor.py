@@ -59,6 +59,28 @@ def is_markov(tensor):
     return ret
 
 
+def composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
+    strand_from_x, strand_to_x = get_lattice_points(strand_x)
+    strand_from_y, strand_to_y = get_lattice_points(strand_y)
+    # 結合演算の結果のストランドの重みを算出
+    if strand_to_x == strand_from_y:  # tensor_x のあるストランドの終点と、tensor_y のあるストランドの始点が一致したばあい
+        # 結合演算の結果のストランドの始点と終点の設定
+        strand_result = str([strand_from_x, strand_to_y])
+        if strand_result in tensor_result.keys():
+            if DEBUG:
+                print("strand_to_x: {0}".format(strand_to_x))
+                print("strand_from_y: {0}".format(strand_from_y))
+                print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
+                    tensor_x[strand_x] * tensor_y[strand_y]))
+            tensor_result[strand_result] += tensor_x[strand_x] * \
+                tensor_y[strand_y]
+        else:
+            tensor_result[strand_result] = tensor_x[strand_x] * \
+                tensor_y[strand_y]
+
+    return tensor_result
+
+
 def composition(tensor_x, tensor_y):
     """
     @param tensor_x テンソル
@@ -71,27 +93,9 @@ def composition(tensor_x, tensor_y):
     if check_composable(tensor_x, tensor_y):
         tensor_result["profile"] = [
             tensor_x["profile"][0], tensor_y["profile"][1]]
-        # tensor_x.pop("profile")
-        # tensor_y.pop("profile")
         for strand_x in [item for item in list(tensor_x.keys()) if item != "profile"]:
             for strand_y in [item for item in list(tensor_y.keys()) if item != "profile"]:
-                strand_from_x, strand_to_x = get_lattice_points(strand_x)
-                strand_from_y, strand_to_y = get_lattice_points(strand_y)
-                # 結合演算の結果のストランドの重みを算出
-                if strand_to_x == strand_from_y:  # tensor_x のあるストランドの終点と、tensor_y のあるストランドの始点が一致したばあい
-                    # 結合演算の結果のストランドの始点と終点の設定
-                    strand_result = str([strand_from_x, strand_to_y])
-                    if strand_result in tensor_result.keys():
-                        if DEBUG:
-                            print("strand_to_x: {0}".format(strand_to_x))
-                            print("strand_from_y: {0}".format(strand_from_y))
-                            print("tensor_x[strand_x] * tensor_y[strand_y]: {0}".format(
-                                tensor_x[strand_x] * tensor_y[strand_y]))
-                        tensor_result[strand_result] += tensor_x[strand_x] * \
-                            tensor_y[strand_y]
-                    else:
-                        tensor_result[strand_result] = tensor_x[strand_x] * \
-                            tensor_y[strand_y]
+                tensor_result = composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result)
     else:
         print("cannot compose")
 
@@ -131,11 +135,10 @@ def main():
     #     "[[2, 2], [2, 2]]": 0.25
     #   }
 
-
-    tensor_ = {
+    tensor_domain_empty_list = {
         "profile": [[], [2]],
-        "[[], [1]]": 0.3,
-        "[[], [2]]": 0.7,
+        "[[], [1]]": 0.1,
+        "[[], [2]]": 0.9,
     }
 
     tensor_x = {
@@ -154,13 +157,12 @@ def main():
         "[[2], [2]]": 0.9,
     }
 
-    tensor_result = composition(tensor_, tensor_x)
+    tensor_result = composition(tensor_domain_empty_list, tensor_x)
     print(tensor_result)
     if is_markov(tensor_result):
         print("this tensor is markov")
     for key in tensor_result.keys():
         print(key, tensor_result[key])
-
 
     tensor_result = composition(tensor_x, tensor_y)
     print(tensor_result)
