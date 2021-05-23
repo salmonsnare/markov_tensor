@@ -270,7 +270,7 @@ def main():
 
     # テンソル間の演算
     for tensor_result in [
-        composition(tensor_domain_empty_list, identity(tensor_c)), 
+        composition(tensor_domain_empty_list, tensor_c), 
         composition(tensor_a, tensor_b), 
         composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
         tensor_product(tensor_c, tensor_d), 
