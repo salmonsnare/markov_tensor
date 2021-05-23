@@ -12,7 +12,6 @@ FXTens の Python による表現
   }
 
 結合演算
-恒等射
 テンソル積
 
 """
@@ -88,6 +87,7 @@ def composition_process(tensor_x, tensor_y, strand_x, strand_y, tensor_result):
 
 def composition(tensor_x, tensor_y):
     """
+    結合を算出
     @param tensor_x テンソル
     @param tensor_y テンソル
     """
@@ -105,11 +105,19 @@ def composition(tensor_x, tensor_y):
     return tensor_result
 
 
-def identity(tensor):
-    """
-    @param tensor テンソル
-    """
-    return tensor
+# def partial_composition(tensor_x, tensor_y, concat_index):
+#     """
+#     部分結合を算出
+#     @param tensor_x テンソル F: a -> b#c
+#     @param tensor_y テンソル G: b -> d
+#     @param concat_index F の余域 の b と c の区切りとして、c の開始に関する index
+#     """
+
+#     tensor_c = {}
+#     codomain_profile_tensor_x = tensor_x["profile"][1]
+#     domain_tensor_c = codomain_profile_tensor_x[concat_index:len(codomain_profile_tensor_x)]
+#     codomain_tensor_c = domain_tensor_c
+#     tensor_c["profile"] = [domain_tensor_c, codomain_tensor_c]
 
 
 def create_profile_tensor_product(tensor_x, tensor_y, tensor_result):
@@ -244,6 +252,22 @@ def main():
         "[[2], [2]]": 0.9,
     }
 
+    tensor_e = {
+        "profile": [[1], [2, 2]], 
+        "[[1], [1, 1]]": 0.1, 
+        "[[1], [1, 2]]": 0.2, 
+        "[[1], [2, 1]]": 0.3, 
+        "[[1], [2, 2]]": 0.4
+    }
+
+    tensor_f = {
+        "profile": [[2], [2]], 
+        "[[1], [1]]": 0.5, 
+        "[[1], [2]]": 0.5, 
+        "[[2], [1]]": 0.5, 
+        "[[2], [2]]": 0.5
+    }
+
     # テンソル間の演算
     for tensor_result in [
         composition(tensor_domain_empty_list, identity(tensor_c)), 
@@ -254,6 +278,7 @@ def main():
     ]:
         is_markov(tensor_result)           # マルコフ性のチェック
         print_tensor(tensor_result) # テンソルを標準出力
+
 
 
 if __name__ == "__main__":
