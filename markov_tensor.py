@@ -420,15 +420,15 @@ def main():
     tensor_g = {
         "profile": [[], [2, 2]], 
         "strands": {
-            "[[], [1, 1]]": Fraction(1, 2), 
-            "[[], [1, 2]]": Fraction(1, 2), 
-            "[[], [2, 1]]": Fraction(1, 2), 
-            "[[], [2, 2]]": Fraction(1, 2)
+            "[[], [1, 1]]": Fraction(1, 10), 
+            "[[], [1, 2]]": Fraction(2, 10), 
+            "[[], [2, 1]]": Fraction(3, 10), 
+            "[[], [2, 2]]": Fraction(4, 10)
         }
     }
 
 
-    # テンソル間の演算
+    # テンソル計算
     for tensor_result in [
         composition(tensor_a, tensor_b), 
         identity(tensor_a),  
