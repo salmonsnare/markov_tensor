@@ -16,6 +16,7 @@ FXTens の Python による表現
 対応したテンソル計算: 
 - 結合演算: メソッド composition
 - 恒等射: メソッド identity
+- 部分結合: メソッド partial composition
 - テンソル積: メソッド tensor_product
 
 """
@@ -29,6 +30,8 @@ DEBUG = True
 
 DOMAIN_PROFILE = 0
 CODOMAIN_PROFILE = 1
+DOMAIN_LATTICE_POINT = 0
+CODOMAIN_LATTICE_POINT = 1
 
 def get_lattice_points(strand):
     """
@@ -84,25 +87,22 @@ def create_indexies(base_list):
     return [list(item) for item in list(itertools.product(*base_list))] # *base_list で引数としてリストを unpack して渡す。
 
 
-# def unit_tensor(tensor):
-#     """
-#     与えられたテンソルのプロファイルから単位テンソルを作成
-#     @param tensor テンソル
-#     """
-#     tensor_result = {}
-#     profile = tensor["profile"]
-#     tensor_result["profile"] = profile
-#     tensor_result["strands"] = {}
-#     domain = profile[DOMAIN_PROFILE]
-#     codomain = profile[CODOMAIN_PROFILE]
+def unit_tensor(domain_or_codomain):
+    """
+    プロファイルの域、または余域から単位テンソルを作成
+    @param domain_or_codomain 域、または余域
+    """
+    tensor_result = {}
+    tensor_result["profile"] = [domain_or_codomain, domain_or_codomain]
+    tensor_result["strands"] = {}
 
-#     domain_base_list = [create_n_bar(domain_item) for domain_item in domain]
-#     codomain_base_list = [create_n_bar(codomain_item) for codomain_item in codomain]
+    base_list = [create_n_bar(domain_or_codomain_item) for domain_or_codomain_item in domain_or_codomain]
 
-#     for item in itertools.product(create_indexies(domain_base_list), create_indexies(codomain_base_list)):
-#         tensor_result["strands"][str(list(item))] = 1
+    for item in itertools.product(create_indexies(base_list), create_indexies(base_list)):
+        if item[DOMAIN_LATTICE_POINT] == item[CODOMAIN_LATTICE_POINT]:
+            tensor_result["strands"][str(list(item))] = 1
 
-#     return tensor_result
+    return tensor_result
       
 
 def identity(tensor):
@@ -159,27 +159,30 @@ def composition(tensor_x, tensor_y):
     return tensor_result
 
 
-# def partial_composition(tensor_x, tensor_y, concat_index):
-#     """
-#     部分結合を算出
-#     @param tensor_x テンソル F: a -> b#c
-#     @param tensor_y テンソル G: b -> d
-#     @param concat_index F の余域 の b と c の区切りとして、c の開始に関する index
-#     """
+def partial_composition(tensor_a_b_sharp_c, tensor_b_d, concat_start_index):
+    """
+    部分結合を算出
+    @param tensor_x テンソル F: a -> b#c
+    @param tensor_y テンソル G: b -> d
+    @param concat_start_index F の余域 の b と c の区切りとして、c の開始に関する index
+    @return tensor_result テンソル a -> d#c
+    """
 
-#     unit_tensor_c = {}
-#     codomain_profile_tensor_x = tensor_x["profile"][CODOMAIN_PROFILE]
-#     domain_tensor_c = codomain_profile_tensor_x[concat_index - 1:len(codomain_profile_tensor_x)]
-#     codomain_tensor_c = domain_tensor_c
-#     unit_tensor_c["profile"] = [domain_tensor_c, codomain_tensor_c]
-#     unit_tensor_c = unit_tensor(unit_tensor_c)
+    codomain_profile_tensor_a_b_sharp_c = tensor_a_b_sharp_c["profile"][CODOMAIN_PROFILE]
+    unit_tensor_c = unit_tensor(codomain_profile_tensor_a_b_sharp_c[concat_start_index - 1:len(codomain_profile_tensor_a_b_sharp_c)])
+ 
+    if DEBUG:
+        print("tensor_a_b_sharp_c")
+        print_tensor(tensor_a_b_sharp_c)
+        print("tensor_b_d")
+        print_tensor(tensor_b_d)
+        print("codomain_profile_tensor_a_b_sharp_c: {0}".format(codomain_profile_tensor_a_b_sharp_c))
+        print("concat_index: {0}".format(concat_start_index))
+        print(codomain_profile_tensor_a_b_sharp_c[concat_start_index - 1:len(codomain_profile_tensor_a_b_sharp_c)])
+        print("unit_tensor_c")
+        print_tensor(unit_tensor_c)
 
-#     if DEBUG:
-#         print("domain_tensor_c")
-#         print("tensor_x")
-#         print_tensor(tensor_x)
-#         print("unit_tensor_c")
-#         print_tensor(unit_tensor_c)
+    return composition(tensor_a_b_sharp_c, tensor_product(tensor_b_d, unit_tensor_c))
 
 
 def create_profile_tensor_product(tensor_x, tensor_y, tensor_result):
@@ -352,7 +355,8 @@ def main():
     for tensor_result in [
         composition(tensor_a, tensor_b), 
         identity(tensor_a),  
-        identity(composition(tensor_a, tensor_b)), 
+        composition(tensor_a, unit_tensor(tensor_a["profile"][CODOMAIN_PROFILE])), 
+        partial_composition(tensor_a, tensor_c, 2), 
         composition(tensor_domain_empty_list, tensor_c), 
         composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
         tensor_product(tensor_c, tensor_d), 
