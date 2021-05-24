@@ -84,7 +84,11 @@ def create_indexies(base_list):
     return [list(item) for item in list(itertools.product(*base_list))] # *base_list で引数としてリストを unpack して渡す。
 
 
-def identity(tensor):
+def unit_tensor(tensor):
+    """
+    与えられたテンソルのプロファイルから単位テンソルを作成
+    @param tensor テンソル
+    """
     tensor_result = {}
     profile = tensor["profile"]
     tensor_result["profile"] = profile
@@ -100,6 +104,14 @@ def identity(tensor):
 
     return tensor_result
       
+
+def identity(tensor):
+    """
+    恒等射
+    @param tensor テンソル
+    """
+    return tensor
+
 
 def composition_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result):
     strand_from_x, strand_to_x = get_lattice_points(strand_x)
@@ -331,11 +343,12 @@ def main():
     # テンソル間の演算
     for tensor_result in [
         composition(tensor_a, tensor_b), 
-        identity(tensor_a),  
-        composition(tensor_domain_empty_list, tensor_c), 
-        composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
-        tensor_product(tensor_c, tensor_d), 
-        tensor_product(tensor_domain_empty_list, tensor_d)
+        # identity(tensor_a),  
+        identity(composition(tensor_a, tensor_b))
+        # composition(tensor_domain_empty_list, tensor_c), 
+        # composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
+        # tensor_product(tensor_c, tensor_d), 
+        # tensor_product(tensor_domain_empty_list, tensor_d)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result) # テンソルを標準出力
