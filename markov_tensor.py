@@ -13,8 +13,10 @@ FXTens の Python による表現
     }
   }
 
-結合演算
-テンソル積
+対応したテンソル計算: 
+- 結合演算: メソッド composition
+- 恒等射: メソッド identity
+- テンソル積: メソッド tensor_product
 
 """
 
@@ -330,10 +332,10 @@ def main():
     for tensor_result in [
         composition(tensor_a, tensor_b), 
         identity(tensor_a),  
-        # composition(tensor_domain_empty_list, tensor_c), 
-        # composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
-        # tensor_product(tensor_c, tensor_d), 
-        # tensor_product(tensor_domain_empty_list, tensor_d)
+        composition(tensor_domain_empty_list, tensor_c), 
+        composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
+        tensor_product(tensor_c, tensor_d), 
+        tensor_product(tensor_domain_empty_list, tensor_d)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result) # テンソルを標準出力
