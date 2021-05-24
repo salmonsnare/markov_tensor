@@ -18,7 +18,8 @@ FXTens の Python による表現
 - 恒等射: メソッド identity
 - 部分結合: メソッド partial composition
 - テンソル積: メソッド tensor_product
-
+- 第一周辺化: メソッド first_marginalization
+- 第二周辺化: メソッド second_marginalization
 """
 
 import numpy as np
@@ -268,7 +269,56 @@ def exclamation(domain):
         tensor_result["strands"][str(list(item))] = 1
 
     return tensor_result
-    
+
+
+def first_marginalization(tensor, concat_start_index):
+    """
+    部分結合を算出
+    @param tensor テンソル F: [] -> a&b
+    @param concat_start_index F の余域 の a と b の区切りとして、b の開始に関する index
+    @return tensor_result テンソル [] -> a
+    """
+    if tensor["profile"][DOMAIN_PROFILE] == []:
+        codomain_profile_tensor = tensor["profile"][CODOMAIN_PROFILE]
+        domain_unit_tensor_a = codomain_profile_tensor[0:concat_start_index - 1]
+        domain_tensor_b = codomain_profile_tensor[concat_start_index - 1:len(codomain_profile_tensor)]
+        unit_tensor_a = unit_tensor(domain_unit_tensor_a)
+
+        if DEBUG:
+            print("codomain_profile_tensor: {0}".format(codomain_profile_tensor))
+            print("domain_unit_tensor_a: {0}".format(domain_unit_tensor_a))
+            print("domain_tensor_b: {0}".format(domain_tensor_b))
+            print("unit_tensor_a: {0}".format(unit_tensor_a))
+
+        return composition(tensor, tensor_product(unit_tensor_a, exclamation(domain_tensor_b)))
+    else:
+        print("cannot compute first marginalization")
+
+
+def second_marginalization(tensor, concat_start_index):
+    """
+    部分結合を算出
+    @param tensor テンソル F: [] -> a&b
+    @param concat_start_index F の余域 の a と b の区切りとして、b の開始に関する index
+    @return tensor_result テンソル [] -> b
+    """
+    if tensor["profile"][DOMAIN_PROFILE] == []:
+        codomain_profile_tensor = tensor["profile"][CODOMAIN_PROFILE]
+        domain_tensor_a = codomain_profile_tensor[0:concat_start_index - 1]
+        domain_unit_tensor_b = codomain_profile_tensor[concat_start_index - 1:len(codomain_profile_tensor)]
+        unit_tensor_b = unit_tensor(domain_unit_tensor_b)
+
+        if DEBUG:
+            print("codomain_profile_tensor: {0}".format(codomain_profile_tensor))
+            print("domain_tensor_a: {0}".format(domain_tensor_a))
+            print("domain_unit_tensor_b: {0}".format(domain_unit_tensor_b))
+            print("unit_tensor_b: {0}".format(unit_tensor_b))
+
+        return composition(tensor, tensor_product(exclamation(domain_tensor_a), unit_tensor_b))
+    else:
+        print("cannot compute second marginalization")
+
+
 
 def print_tensor(tensor):
     """
@@ -367,6 +417,17 @@ def main():
         }
     }
 
+    tensor_g = {
+        "profile": [[], [2, 2]], 
+        "strands": {
+            "[[], [1, 1]]": Fraction(1, 2), 
+            "[[], [1, 2]]": Fraction(1, 2), 
+            "[[], [2, 1]]": Fraction(1, 2), 
+            "[[], [2, 2]]": Fraction(1, 2)
+        }
+    }
+
+
     # テンソル間の演算
     for tensor_result in [
         composition(tensor_a, tensor_b), 
@@ -377,7 +438,9 @@ def main():
         composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
         tensor_product(tensor_c, tensor_d), 
         tensor_product(tensor_domain_empty_list, tensor_d), 
-        exclamation([2, 2, 3])
+        exclamation([2, 2, 3]), 
+        first_marginalization(tensor_g, 2), 
+        second_marginalization(tensor_g, 2)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result) # テンソルを標準出力
