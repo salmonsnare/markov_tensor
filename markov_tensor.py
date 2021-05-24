@@ -254,6 +254,22 @@ def tensor_product(tensor_x, tensor_y):
     return tensor_result
 
 
+def exclamation(domain):
+    """
+    域が与えられたとき、マルコフ・テンソル ! を構成
+    @param domain 域
+    """
+    tensor_result = {}
+    strands_result = {}
+    tensor_result["profile"] = [domain, []]
+    tensor_result["strands"] = strands_result
+    base_list = [create_n_bar(domain_item) for domain_item in domain]
+    for item in itertools.product(create_indexies(base_list), [[]]):
+        tensor_result["strands"][str(list(item))] = 1
+
+    return tensor_result
+    
+
 def print_tensor(tensor):
     """
     テンソルを標準出力に表示
@@ -360,7 +376,8 @@ def main():
         composition(tensor_domain_empty_list, tensor_c), 
         composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
         tensor_product(tensor_c, tensor_d), 
-        tensor_product(tensor_domain_empty_list, tensor_d)
+        tensor_product(tensor_domain_empty_list, tensor_d), 
+        exclamation([2, 2, 3])
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result) # テンソルを標準出力
