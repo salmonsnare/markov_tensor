@@ -84,25 +84,25 @@ def create_indexies(base_list):
     return [list(item) for item in list(itertools.product(*base_list))] # *base_list で引数としてリストを unpack して渡す。
 
 
-def unit_tensor(tensor):
-    """
-    与えられたテンソルのプロファイルから単位テンソルを作成
-    @param tensor テンソル
-    """
-    tensor_result = {}
-    profile = tensor["profile"]
-    tensor_result["profile"] = profile
-    tensor_result["strands"] = {}
-    domain = profile[DOMAIN_PROFILE]
-    codomain = profile[CODOMAIN_PROFILE]
+# def unit_tensor(tensor):
+#     """
+#     与えられたテンソルのプロファイルから単位テンソルを作成
+#     @param tensor テンソル
+#     """
+#     tensor_result = {}
+#     profile = tensor["profile"]
+#     tensor_result["profile"] = profile
+#     tensor_result["strands"] = {}
+#     domain = profile[DOMAIN_PROFILE]
+#     codomain = profile[CODOMAIN_PROFILE]
 
-    domain_base_list = [create_n_bar(domain_item) for domain_item in domain]
-    codomain_base_list = [create_n_bar(codomain_item) for codomain_item in codomain]
+#     domain_base_list = [create_n_bar(domain_item) for domain_item in domain]
+#     codomain_base_list = [create_n_bar(codomain_item) for codomain_item in codomain]
 
-    for item in itertools.product(create_indexies(domain_base_list), create_indexies(codomain_base_list)):
-        tensor_result["strands"][str(list(item))] = 1
+#     for item in itertools.product(create_indexies(domain_base_list), create_indexies(codomain_base_list)):
+#         tensor_result["strands"][str(list(item))] = 1
 
-    return tensor_result
+#     return tensor_result
       
 
 def identity(tensor):
@@ -167,11 +167,19 @@ def composition(tensor_x, tensor_y):
 #     @param concat_index F の余域 の b と c の区切りとして、c の開始に関する index
 #     """
 
-#     tensor_c = {}
-#     codomain_profile_tensor_x = tensor_x["profile"][1]
-#     domain_tensor_c = codomain_profile_tensor_x[concat_index:len(codomain_profile_tensor_x)]
+#     unit_tensor_c = {}
+#     codomain_profile_tensor_x = tensor_x["profile"][CODOMAIN_PROFILE]
+#     domain_tensor_c = codomain_profile_tensor_x[concat_index - 1:len(codomain_profile_tensor_x)]
 #     codomain_tensor_c = domain_tensor_c
-#     tensor_c["profile"] = [domain_tensor_c, codomain_tensor_c]
+#     unit_tensor_c["profile"] = [domain_tensor_c, codomain_tensor_c]
+#     unit_tensor_c = unit_tensor(unit_tensor_c)
+
+#     if DEBUG:
+#         print("domain_tensor_c")
+#         print("tensor_x")
+#         print_tensor(tensor_x)
+#         print("unit_tensor_c")
+#         print_tensor(unit_tensor_c)
 
 
 def create_profile_tensor_product(tensor_x, tensor_y, tensor_result):
@@ -343,12 +351,12 @@ def main():
     # テンソル間の演算
     for tensor_result in [
         composition(tensor_a, tensor_b), 
-        # identity(tensor_a),  
-        identity(composition(tensor_a, tensor_b))
-        # composition(tensor_domain_empty_list, tensor_c), 
-        # composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
-        # tensor_product(tensor_c, tensor_d), 
-        # tensor_product(tensor_domain_empty_list, tensor_d)
+        identity(tensor_a),  
+        identity(composition(tensor_a, tensor_b)), 
+        composition(tensor_domain_empty_list, tensor_c), 
+        composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
+        tensor_product(tensor_c, tensor_d), 
+        tensor_product(tensor_domain_empty_list, tensor_d)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result) # テンソルを標準出力
