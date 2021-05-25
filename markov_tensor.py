@@ -13,13 +13,18 @@ FXTens の Python による表現
     }
   }
 
-対応したテンソル計算: 
+テンソル計算: 
 - 結合演算: メソッド composition
 - 恒等射: メソッド identity
 - 部分結合: メソッド partial composition
 - テンソル積: メソッド tensor_product
 - 第一周辺化: メソッド first_marginalization
 - 第二周辺化: メソッド second_marginalization
+
+テンソルを構成
+- 単位テンソル: メソッド unit_tensor
+- マルコフ・テンソル Δ: メソッド delta
+- マルコフ・テンソル ！: メソッド exclamation
 """
 
 import numpy as np
@@ -33,6 +38,7 @@ DOMAIN_PROFILE = 0
 CODOMAIN_PROFILE = 1
 DOMAIN_LATTICE_POINT = 0
 CODOMAIN_LATTICE_POINT = 1
+
 
 def get_lattice_points(strand):
     """
@@ -80,30 +86,16 @@ def is_markov(tensor):
     return ret
 
 
+def eq(list_x, list_y):
+    return 1 if list_x == list_y else 0
+
+
 def create_n_bar(n):
     return [index + 1 for index in range(n)]
 
 
 def create_indexies(base_list):
     return [list(item) for item in list(itertools.product(*base_list))] # *base_list で引数としてリストを unpack して渡す。
-
-
-def unit_tensor(domain_or_codomain):
-    """
-    プロファイルの域、または余域から単位テンソルを作成
-    @param domain_or_codomain 域、または余域
-    """
-    tensor_result = {}
-    tensor_result["profile"] = [domain_or_codomain, domain_or_codomain]
-    tensor_result["strands"] = {}
-
-    base_list = [create_n_bar(domain_or_codomain_item) for domain_or_codomain_item in domain_or_codomain]
-
-    for item in itertools.product(create_indexies(base_list), create_indexies(base_list)):
-        if item[DOMAIN_LATTICE_POINT] == item[CODOMAIN_LATTICE_POINT]:
-            tensor_result["strands"][str(list(item))] = 1
-
-    return tensor_result
       
 
 def identity(tensor):
@@ -255,16 +247,71 @@ def tensor_product(tensor_x, tensor_y):
     return tensor_result
 
 
-def exclamation(domain):
+def unit_tensor(list_x):
     """
-    域が与えられたとき、マルコフ・テンソル ! を構成
-    @param domain 域
+    リストから単位テンソルを作成
+    @param list_x リスト
+    """
+    tensor_result = {}
+    tensor_result["profile"] = [list_x, list_x]
+    tensor_result["strands"] = {}
+
+    base_list = [create_n_bar(item) for item in list_x]
+
+    for item in itertools.product(create_indexies(base_list), create_indexies(base_list)):
+        if item[DOMAIN_LATTICE_POINT] == item[CODOMAIN_LATTICE_POINT]:
+            tensor_result["strands"][str(list(item))] = 1
+
+    return tensor_result
+
+
+
+def delta(list_x):
+    """
+    リストが与えられたとき、マルコフ・テンソル Δ を構成
+    @param list_x リスト
     """
     tensor_result = {}
     strands_result = {}
-    tensor_result["profile"] = [domain, []]
+
+    domain = list_x
+    codomain = []
+    codomain.extend(list_x)
+    codomain.extend(list_x)
+
+    tensor_result["profile"] = [domain, codomain]
     tensor_result["strands"] = strands_result
-    base_list = [create_n_bar(domain_item) for domain_item in domain]
+    base_list_a = [create_n_bar(item) for item in domain]
+    base_list_a_a = [create_n_bar(item) for item in codomain]
+    for item in itertools.product(create_indexies(base_list_a), create_indexies(base_list_a_a)):
+        x = item[DOMAIN_LATTICE_POINT]
+        codomain_lattice_point = item[CODOMAIN_LATTICE_POINT]
+        concat_index = int(len(codomain_lattice_point) / 2)
+        x_ = codomain_lattice_point[0:concat_index]
+        x__ = codomain_lattice_point[concat_index:len(codomain_lattice_point)]
+
+        if DEBUG:
+            print("x: {0}".format(x))
+            print("x_: {0}".format(x_))
+            print("x__: {0}".format(x__))
+            print("eq(x_, x): {0}".format(eq(x_, x)))
+            print("eq(x__, x): {0}".format(eq(x__, x)))
+
+        tensor_result["strands"][str(item)] = eq(x_, x) * eq(x__, x)
+
+    return tensor_result
+
+
+def exclamation(list_x):
+    """
+    リストが与えられたとき、マルコフ・テンソル ! を構成
+    @param list_x リスト
+    """
+    tensor_result = {}
+    strands_result = {}
+    tensor_result["profile"] = [list_x, []]
+    tensor_result["strands"] = strands_result
+    base_list = [create_n_bar(domain_item) for domain_item in list_x]
     for item in itertools.product(create_indexies(base_list), [[]]):
         tensor_result["strands"][str(list(item))] = 1
 
@@ -437,7 +484,8 @@ def main():
         composition(tensor_domain_empty_list, tensor_c), 
         composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
         tensor_product(tensor_c, tensor_d), 
-        tensor_product(tensor_domain_empty_list, tensor_d), 
+        tensor_product(tensor_domain_empty_list, tensor_d),
+        delta([2, 2]), 
         exclamation([2, 2, 3]), 
         first_marginalization(tensor_g, 2), 
         second_marginalization(tensor_g, 2)
