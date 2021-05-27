@@ -17,6 +17,7 @@ FXTens の Python による表現
 - 結合演算: メソッド composition
 - 恒等射: メソッド identity
 - 部分結合: メソッド partial composition
+- 同時化: メソッド jointification
 - テンソル積: メソッド tensor_product
 - 第一周辺化: メソッド first_marginalization
 - 第二周辺化: メソッド second_marginalization
@@ -107,6 +108,15 @@ def identity(tensor):
 
 
 def composition_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result):
+    """
+    結合演算のためのストランド間の計算
+    @param tensor_x テンソル
+    @param tensor_y テンソル
+    @param strand_x テンソル tensor_x のストランド
+    @param strand_y テンソル tensor_y のストランド
+    @param strands_result 結果のストランド
+    @param tensor_result 結果のテンソル
+    """
     strand_from_x, strand_to_x = get_lattice_points(strand_x)
     strand_from_y, strand_to_y = get_lattice_points(strand_y)
     # 結合演算の結果のストランドの重みを算出
@@ -197,6 +207,12 @@ def create_profile_tensor_product(tensor_x, tensor_y, tensor_result):
 def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result):
     """
     テンソル積を算出するためのストランド間の計算
+    @param tensor_x テンソル
+    @param tensor_y テンソル
+    @param strand_x テンソル tensor_x のストランド
+    @param strand_y テンソル tensor_y のストランド
+    @param strands_result 結果のストランド
+    @param tensor_result 結果のテンソル
     """
     strand_from_x, strand_to_x = get_lattice_points(strand_x)
     strand_from_y, strand_to_y = get_lattice_points(strand_y)
@@ -314,6 +330,56 @@ def exclamation(list_x):
     base_list = [create_n_bar(domain_item) for domain_item in list_x]
     for item in itertools.product(create_indexies(base_list), [[]]):
         tensor_result["strands"][str(list(item))] = 1
+
+    return tensor_result
+
+
+def jointification_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result):
+    """
+    同時化を算出するためのストランド間の計算
+    @param tensor_x テンソル
+    @param tensor_y テンソル
+    @param strand_x テンソル tensor_x のストランド
+    @param strand_y テンソル tensor_y のストランド
+    @param strands_result 結果のストランド
+    @param tensor_result 結果のテンソル
+    """
+
+    strand_from_x, strand_to_x = get_lattice_points(strand_x)
+    strand_from_y, strand_to_y = get_lattice_points(strand_y)
+
+    strand_from = []
+    strand_to = []
+    strand_to.extend(strand_from_y)
+    strand_to.extend(strand_to_y)
+
+    if strand_to_x == strand_from_y:  # tensor_x のあるストランドの終点と、tensor_y のあるストランドの始点が一致した場合
+        strand_lattice_points = str([strand_from, strand_to])
+        mult = round(tensor_x["strands"][strand_x] * tensor_y["strands"][strand_y], 5)
+        if DEBUG:
+            print("---")
+            print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strands][strand_x]: {2}".format(strand_from_x, strand_to_x, tensor_x["strands"][strand_x]))
+            print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strands][strand_y]: {2}".format(strand_from_y, strand_to_y, tensor_y["strands"][strand_y]))
+            print("strand_from: {0}, strand_to: {1}".format(strand_from, strand_to))
+            print("tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: {0}".format(mult))
+        strands_result[strand_lattice_points] = mult
+
+    return tensor_result, strands_result
+
+
+def jointification(tensor_x,tensor_y):
+    tensor_result = {}
+    strands_result = {}
+    if check_composable(tensor_x, tensor_y):
+        tensor_result["profile"] = [
+            tensor_x["profile"][DOMAIN_PROFILE], 
+            tensor_y["profile"][CODOMAIN_PROFILE]
+        ]
+
+    for strand_x in [item for item in list(tensor_x["strands"].keys())]:
+        for strand_y in [item for item in list(tensor_y["strands"].keys())]:
+            tensor_result, strands_result = jointification_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
+    tensor_result["strands"] = strands_result
 
     return tensor_result
 
@@ -477,18 +543,19 @@ def main():
 
     # テンソル計算
     for tensor_result in [
-        composition(tensor_a, tensor_b), 
-        identity(tensor_a),  
-        composition(tensor_a, unit_tensor(tensor_a["profile"][CODOMAIN_PROFILE])), 
-        partial_composition(tensor_a, tensor_c, 2), 
-        composition(tensor_domain_empty_list, tensor_c), 
-        composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
-        tensor_product(tensor_c, tensor_d), 
-        tensor_product(tensor_domain_empty_list, tensor_d),
-        delta([2, 2]), 
-        exclamation([2, 2, 3]), 
-        first_marginalization(tensor_g, 2), 
-        second_marginalization(tensor_g, 2)
+        # composition(tensor_a, tensor_b), 
+        # identity(tensor_a),  
+        # composition(tensor_a, unit_tensor(tensor_a["profile"][CODOMAIN_PROFILE])), 
+        # partial_composition(tensor_a, tensor_c, 2), 
+        # composition(tensor_domain_empty_list, tensor_c), 
+        # composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
+        # tensor_product(tensor_c, tensor_d), 
+        # tensor_product(tensor_domain_empty_list, tensor_d),
+        # delta([2, 2]), 
+        # exclamation([2, 2, 3]), 
+        jointification(tensor_domain_empty_list, tensor_c), 
+        # first_marginalization(tensor_g, 2), 
+        # second_marginalization(tensor_g, 2)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result) # テンソルを標準出力
