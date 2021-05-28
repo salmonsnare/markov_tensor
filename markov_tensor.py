@@ -18,6 +18,7 @@ FXTens の Python による表現
 - 恒等射: メソッド identity
 - 部分結合: メソッド partial composition
 - 同時化: メソッド jointification
+- 条件化: メソッド conditionalization
 - テンソル積: メソッド tensor_product
 - 第一周辺化: メソッド first_marginalization
 - 第二周辺化: メソッド second_marginalization
@@ -367,7 +368,13 @@ def jointification_process(tensor_x, tensor_y, strand_x, strand_y, strands_resul
     return tensor_result, strands_result
 
 
-def jointification(tensor_x,tensor_y):
+def jointification(tensor_x, tensor_y):
+    """
+    同時化を算出
+    @param tensor_x テンソル [] -> a
+    @param tensor_y テンソル a -> b
+    @return tensor_result テンソル [] -> a#b
+    """
     tensor_result = {}
     strands_result = {}
     if check_composable(tensor_x, tensor_y):
@@ -376,9 +383,45 @@ def jointification(tensor_x,tensor_y):
             tensor_y["profile"][CODOMAIN_PROFILE]
         ]
 
-    for strand_x in [item for item in list(tensor_x["strands"].keys())]:
-        for strand_y in [item for item in list(tensor_y["strands"].keys())]:
+    for strand_x in list(tensor_x["strands"].keys()):
+        for strand_y in list(tensor_y["strands"].keys()):
             tensor_result, strands_result = jointification_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
+    tensor_result["strands"] = strands_result
+
+    return tensor_result
+
+
+def conditionalization(tensor_x, concat_start_index):
+    """
+    条件化を算出
+    @param tensor_x テンソル [] -> a&b
+    @param concat_start_index F の余域 の a と b の区切りとして、b の開始に関する index
+    @return tensor_result テンソル a -> b 
+    """
+
+    tensor_result = {}
+    strands_result = {}
+    total = {}
+
+    codomain_profile = tensor_x["profile"][CODOMAIN_PROFILE]
+    tensor_result["profile"] = [
+        codomain_profile[0:concat_start_index - 1], 
+        codomain_profile[concat_start_index - 1:len(codomain_profile)]
+    ]
+
+    for strand in list(tensor_x["strands"].keys()):
+        _, strand_to = get_lattice_points(strand)
+        total_strand_from = str([strand_to[0:concat_start_index - 1]])
+        if total_strand_from in total.keys(): # もし既にキー strand_result に値が設定されていれば加算
+            total[total_strand_from] += tensor_x["strands"][strand]
+        else:
+            total[total_strand_from] = tensor_x["strands"][strand]
+
+    for strand in list(tensor_x["strands"].keys()):
+        _, strand_to = get_lattice_points(strand)
+        total_strand_from = str([strand_to[0:concat_start_index - 1]])
+        strand_lattice_points = str([strand_to[0:concat_start_index - 1], strand_to[concat_start_index - 1:len(codomain_profile)]])
+        strands_result[strand_lattice_points] = tensor_x["strands"][strand] / total[total_strand_from]
     tensor_result["strands"] = strands_result
 
     return tensor_result
@@ -543,19 +586,20 @@ def main():
 
     # テンソル計算
     for tensor_result in [
-        # composition(tensor_a, tensor_b), 
-        # identity(tensor_a),  
-        # composition(tensor_a, unit_tensor(tensor_a["profile"][CODOMAIN_PROFILE])), 
-        # partial_composition(tensor_a, tensor_c, 2), 
-        # composition(tensor_domain_empty_list, tensor_c), 
-        # composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
-        # tensor_product(tensor_c, tensor_d), 
-        # tensor_product(tensor_domain_empty_list, tensor_d),
-        # delta([2, 2]), 
-        # exclamation([2, 2, 3]), 
+        composition(tensor_a, tensor_b), 
+        identity(tensor_a),  
+        composition(tensor_a, unit_tensor(tensor_a["profile"][CODOMAIN_PROFILE])), 
+        partial_composition(tensor_a, tensor_c, 2), 
+        composition(tensor_domain_empty_list, tensor_c), 
+        composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
+        tensor_product(tensor_c, tensor_d), 
+        tensor_product(tensor_domain_empty_list, tensor_d),
+        delta([2, 2]), 
+        exclamation([2, 2, 3]), 
         jointification(tensor_domain_empty_list, tensor_c), 
-        # first_marginalization(tensor_g, 2), 
-        # second_marginalization(tensor_g, 2)
+        first_marginalization(tensor_g, 2), 
+        second_marginalization(tensor_g, 2), 
+        conditionalization(tensor_g, 2)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result) # テンソルを標準出力
