@@ -817,31 +817,31 @@ def main():
 
     # テンソル計算
     for tensor_result in [
-        # composition(tensor_a, tensor_b),
-        # composition(tensor_label1, tensor_label2),
-        # identity(tensor_a),
-        # composition(tensor_a, unit_tensor(
-        #     tensor_a["profile"][CODOMAIN_PROFILE])),
-        # composition(tensor_label1, unit_tensor(
-        #     tensor_label1["profile"][CODOMAIN_PROFILE])),
-        # partial_composition(tensor_a, tensor_c, 2),
-        # composition(tensor_domain_empty_list, tensor_c),
-        # composition(composition(composition(
-        #     tensor_c, tensor_d), tensor_d), tensor_d),
-        # tensor_product(tensor_label1, tensor_label2),
-        # tensor_product(tensor_c, tensor_d),
-        # tensor_product(tensor_domain_empty_list, tensor_d),
-        # delta([2, 2]),
-        # delta([['a', 'b']]),
-        # exclamation([2, 2, 3]),
-        # exclamation([['a', 'b', 'c']]),
-        # unit_tensor([2, 2, 3]),
-        # unit_tensor([['a', 'b', 'c']]),
-        # jointification(tensor_domain_empty_list, tensor_c),
-        # first_marginalization(tensor_g, 2),
-        # second_marginalization(tensor_g, 2),
-        # conditionalization(tensor_g, 2), 
-        # swap([2, 2], [3]), 
+        composition(tensor_a, tensor_b),
+        composition(tensor_label1, tensor_label2),
+        identity(tensor_a),
+        composition(tensor_a, unit_tensor(
+            tensor_a["profile"][CODOMAIN_PROFILE])),
+        composition(tensor_label1, unit_tensor(
+            tensor_label1["profile"][CODOMAIN_PROFILE])),
+        partial_composition(tensor_a, tensor_c, 2),
+        composition(tensor_domain_empty_list, tensor_c),
+        composition(composition(composition(
+            tensor_c, tensor_d), tensor_d), tensor_d),
+        tensor_product(tensor_label1, tensor_label2),
+        tensor_product(tensor_c, tensor_d),
+        tensor_product(tensor_domain_empty_list, tensor_d),
+        delta([2, 2]),
+        delta([['a', 'b']]),
+        exclamation([2, 2, 3]),
+        exclamation([['a', 'b', 'c']]),
+        unit_tensor([2, 2, 3]),
+        unit_tensor([['a', 'b', 'c']]),
+        jointification(tensor_domain_empty_list, tensor_c),
+        first_marginalization(tensor_g, 2),
+        second_marginalization(tensor_g, 2),
+        conditionalization(tensor_g, 2), 
+        swap([2, 2], [3]), 
         conversion(tensor_domain_empty_list, tensor_a)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
