@@ -27,7 +27,7 @@ FXTens の Python による表現
 - 単位テンソル: メソッド unit_tensor
 - マルコフ・テンソル Δ: メソッド delta
 - マルコフ・テンソル ！: メソッド exclamation
-- マルコフ・テンソル Xab (スワップ): メソッド swap
+- マルコフ・テンソル Xa,b (スワップ): メソッド swap
 """
 
 import numpy as np
@@ -507,10 +507,11 @@ def jointification(tensor_x, tensor_y):
     tensor_result = {}
     strands_result = {}
     if check_composable(tensor_x, tensor_y):
-        tensor_result["profile"] = [
-            tensor_x["profile"][DOMAIN_PROFILE],
-            tensor_y["profile"][CODOMAIN_PROFILE]
-        ]
+        domain = []
+        codomain = []
+        codomain.extend(tensor_y["profile"][DOMAIN_PROFILE])
+        codomain.extend(tensor_y["profile"][CODOMAIN_PROFILE])
+        tensor_result["profile"] = [domain, codomain]
 
     for strand_x in list(tensor_x["strands"].keys()):
         for strand_y in list(tensor_y["strands"].keys()):
@@ -611,33 +612,39 @@ def second_marginalization(tensor, concat_start_index):
         print("cannot compute second marginalization")
 
 
-def swap(list_x, concat_start_index):
+def swap(list_a, list_b):
     """
-    リストからテンソル Xab を作成
-    @param list_x リスト
-    @param concat_start_index F の余域 の a と b の区切りとして、b の開始に関する index
+    リストからテンソル Xa,b を作成
+    @param list_a リスト
+    @param list_b リスト
     @return tensor_result テンソル a#b -> b#a
     """
 
     tensor_result = {}
     tensor_result["strands"] = {}
-    domain = list_x
-    codomain = []
-    codomain.extend(list_x[concat_start_index - 1:len(list_x)])
-    codomain.extend(list_x[0:concat_start_index - 1])
-    tensor_result["profile"] = [domain, codomain]
-    print(tensor_result["profile"])
 
+    domain = []
+    domain.extend(list_a)
+    domain.extend(list_b)
+
+    codomain = []
+    codomain.extend(list_b)
+    codomain.extend(list_a)
+
+    tensor_result["profile"] = [domain, codomain]
+    
     is_number = True
-    for item in list_x:
+    for item in list_a:
+        is_number = is_number and type(item) == int
+    for item in list_b:
         is_number = is_number and type(item) == int
 
-    base_list_domain = list_x[0:concat_start_index - 1]
-    base_list_codomain = list_x[concat_start_index - 1:len(list_x)]
+    base_list_domain = list_b
+    base_list_codomain = list_b
 
     if is_number:
-        base_list_domain = [create_n_bar(item) for item in list_x[0:concat_start_index - 1]]
-        base_list_codomain = [create_n_bar(item) for item in list_x[concat_start_index - 1:len(list_x)]]
+        base_list_domain = [create_n_bar(item) for item in list_a]
+        base_list_codomain = [create_n_bar(item) for item in list_b]
     
     for item in itertools.product(create_indexies(base_list_domain), create_indexies(base_list_codomain)):
         domain_lattice_point = []
@@ -656,6 +663,25 @@ def swap(list_x, concat_start_index):
         tensor_result["strands"][str(lattice_point)] = 1
 
     return tensor_result
+
+
+def conversion(tensor_empty_a, tensor_a_b):
+    """
+    反転
+    @param tensor_empty_a テンソル F [] -> a
+    @param tensor_a_b テンソル G a -> b
+    @return tensor_result テンソル b -> a
+    """
+    return conditionalization(
+        composition(
+            jointification(tensor_empty_a, tensor_a_b), # [] -> a, a -> b => [] -> a#b
+            swap( # Xa,b: a#b => b#a
+                tensor_a_b["profile"][DOMAIN_PROFILE], 
+                tensor_a_b["profile"][CODOMAIN_PROFILE]
+            )
+        ), # [] -> b#a
+        len(tensor_a_b["profile"][CODOMAIN_PROFILE]) + 1 # リスト b の長さ + 1
+    ) # [] -> b&a => b -> a
 
 
 def print_tensor(tensor):
@@ -791,31 +817,32 @@ def main():
 
     # テンソル計算
     for tensor_result in [
-        composition(tensor_a, tensor_b),
-        composition(tensor_label1, tensor_label2),
-        identity(tensor_a),
-        composition(tensor_a, unit_tensor(
-            tensor_a["profile"][CODOMAIN_PROFILE])),
-        composition(tensor_label1, unit_tensor(
-            tensor_label1["profile"][CODOMAIN_PROFILE])),
-        partial_composition(tensor_a, tensor_c, 2),
-        composition(tensor_domain_empty_list, tensor_c),
-        composition(composition(composition(
-            tensor_c, tensor_d), tensor_d), tensor_d),
-        tensor_product(tensor_label1, tensor_label2),
-        tensor_product(tensor_c, tensor_d),
-        tensor_product(tensor_domain_empty_list, tensor_d),
-        delta([2, 2]),
-        delta([['a', 'b']]),
-        exclamation([2, 2, 3]),
-        exclamation([['a', 'b', 'c']]),
-        unit_tensor([2, 2, 3]),
-        unit_tensor([['a', 'b', 'c']]),
-        jointification(tensor_domain_empty_list, tensor_c),
-        first_marginalization(tensor_g, 2),
-        second_marginalization(tensor_g, 2),
-        conditionalization(tensor_g, 2), 
-        swap([2, 2, 3], 3)
+        # composition(tensor_a, tensor_b),
+        # composition(tensor_label1, tensor_label2),
+        # identity(tensor_a),
+        # composition(tensor_a, unit_tensor(
+        #     tensor_a["profile"][CODOMAIN_PROFILE])),
+        # composition(tensor_label1, unit_tensor(
+        #     tensor_label1["profile"][CODOMAIN_PROFILE])),
+        # partial_composition(tensor_a, tensor_c, 2),
+        # composition(tensor_domain_empty_list, tensor_c),
+        # composition(composition(composition(
+        #     tensor_c, tensor_d), tensor_d), tensor_d),
+        # tensor_product(tensor_label1, tensor_label2),
+        # tensor_product(tensor_c, tensor_d),
+        # tensor_product(tensor_domain_empty_list, tensor_d),
+        # delta([2, 2]),
+        # delta([['a', 'b']]),
+        # exclamation([2, 2, 3]),
+        # exclamation([['a', 'b', 'c']]),
+        # unit_tensor([2, 2, 3]),
+        # unit_tensor([['a', 'b', 'c']]),
+        # jointification(tensor_domain_empty_list, tensor_c),
+        # first_marginalization(tensor_g, 2),
+        # second_marginalization(tensor_g, 2),
+        # conditionalization(tensor_g, 2), 
+        # swap([2, 2], [3]), 
+        conversion(tensor_domain_empty_list, tensor_a)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result)  # テンソルを標準出力
