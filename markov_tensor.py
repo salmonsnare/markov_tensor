@@ -27,6 +27,7 @@ FXTens の Python による表現
 - 単位テンソル: メソッド unit_tensor
 - マルコフ・テンソル Δ: メソッド delta
 - マルコフ・テンソル ！: メソッド exclamation
+- マルコフ・テンソル Xab (スワップ): メソッド swap
 """
 
 import numpy as np
@@ -103,7 +104,8 @@ def convert_label2index(tensor_x):
 
     tensor_result = {}
     strands_result = {}
-    domain_label_index, codomain_label_index = construct_label_index_dict(tensor_x)
+    domain_label_index, codomain_label_index = construct_label_index_dict(
+        tensor_x)
     domain_profile = tensor_x["profile"][DOMAIN_PROFILE]
     codomain_profile = tensor_x["profile"][CODOMAIN_PROFILE]
     tensor_result["profile"] = [
@@ -113,8 +115,10 @@ def convert_label2index(tensor_x):
     for strand in tensor_x["strands"].keys():
         strand_list = eval(strand)
         converted_strand = str([
-            [ domain_label_index[item] for item in strand_list[DOMAIN_LATTICE_POINT] ], 
-            [ codomain_label_index[item] for item in strand_list[CODOMAIN_LATTICE_POINT] ], 
+            [domain_label_index[item]
+                for item in strand_list[DOMAIN_LATTICE_POINT]],
+            [codomain_label_index[item]
+                for item in strand_list[CODOMAIN_LATTICE_POINT]],
         ])
         strands_result[converted_strand] = tensor_x["strands"][strand]
 
@@ -178,8 +182,9 @@ def create_n_bar(n):
 
 
 def create_indexies(base_list):
-    return [list(item) for item in list(itertools.product(*base_list))] # *base_list で引数としてリストを unpack して渡す。
-      
+    # *base_list で引数としてリストを unpack して渡す。
+    return [list(item) for item in list(itertools.product(*base_list))]
+
 
 def identity(tensor):
     """
@@ -206,15 +211,19 @@ def composition_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, 
         # 結合演算の結果のストランドの始点と終点の設定
         # キー strand_result はストランドの始点と終点を表す格子点を表す。
         strand_lattice_points = str([strand_from_x, strand_to_y])
-        mult = round(tensor_x["strands"][strand_x] * tensor_y["strands"][strand_y], 5)
+        mult = round(tensor_x["strands"][strand_x] *
+                     tensor_y["strands"][strand_y], 5)
         if DEBUG:
             print("---")
-            print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strand_x]: {2}".format(strand_from_x, strand_to_x, tensor_x["strands"][strand_x]))
-            print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strand_y]: {2}".format(strand_from_y, strand_to_y, tensor_y["strands"][strand_y]))
-            print("tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: {0}".format(mult))
-        if strand_lattice_points in strands_result.keys(): # もし既にキー strand_result に値が設定されていれば加算
+            print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strand_x]: {2}".format(
+                strand_from_x, strand_to_x, tensor_x["strands"][strand_x]))
+            print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strand_y]: {2}".format(
+                strand_from_y, strand_to_y, tensor_y["strands"][strand_y]))
+            print(
+                "tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: {0}".format(mult))
+        if strand_lattice_points in strands_result.keys():  # もし既にキー strand_result に値が設定されていれば加算
             strands_result[strand_lattice_points] += mult
-        else: # もし既にキー strand_result に値が設定されていなければ設定
+        else:  # もし既にキー strand_result に値が設定されていなければ設定
             strands_result[strand_lattice_points] = mult
 
     return tensor_result, strands_result
@@ -231,12 +240,13 @@ def composition(tensor_x, tensor_y):
     strands_result = {}
     if check_composable(tensor_x, tensor_y):
         tensor_result["profile"] = [
-            tensor_x["profile"][DOMAIN_PROFILE], 
+            tensor_x["profile"][DOMAIN_PROFILE],
             tensor_y["profile"][CODOMAIN_PROFILE]
         ]
         for strand_x in [item for item in list(tensor_x["strands"].keys())]:
             for strand_y in [item for item in list(tensor_y["strands"].keys())]:
-                tensor_result, strands_result = composition_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
+                tensor_result, strands_result = composition_process(
+                    tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
     else:
         print("cannot compose")
     tensor_result["strands"] = strands_result
@@ -254,16 +264,19 @@ def partial_composition(tensor_a_b_sharp_c, tensor_b_d, concat_start_index):
     """
 
     codomain_profile_tensor_a_b_sharp_c = tensor_a_b_sharp_c["profile"][CODOMAIN_PROFILE]
-    unit_tensor_c = unit_tensor(codomain_profile_tensor_a_b_sharp_c[concat_start_index - 1:len(codomain_profile_tensor_a_b_sharp_c)])
- 
+    unit_tensor_c = unit_tensor(
+        codomain_profile_tensor_a_b_sharp_c[concat_start_index - 1:len(codomain_profile_tensor_a_b_sharp_c)])
+
     if DEBUG:
         print("tensor_a_b_sharp_c")
         print_tensor(tensor_a_b_sharp_c)
         print("tensor_b_d")
         print_tensor(tensor_b_d)
-        print("codomain_profile_tensor_a_b_sharp_c: {0}".format(codomain_profile_tensor_a_b_sharp_c))
+        print("codomain_profile_tensor_a_b_sharp_c: {0}".format(
+            codomain_profile_tensor_a_b_sharp_c))
         print("concat_index: {0}".format(concat_start_index))
-        print(codomain_profile_tensor_a_b_sharp_c[concat_start_index - 1:len(codomain_profile_tensor_a_b_sharp_c)])
+        print(codomain_profile_tensor_a_b_sharp_c[concat_start_index - 1:len(
+            codomain_profile_tensor_a_b_sharp_c)])
         print("unit_tensor_c")
         print_tensor(unit_tensor_c)
 
@@ -280,8 +293,8 @@ def create_profile_tensor_product(tensor_x, tensor_y, tensor_result):
     codomain.extend(tensor_x["profile"][CODOMAIN_PROFILE])
     codomain.extend(tensor_y["profile"][CODOMAIN_PROFILE])
     tensor_result["profile"] = [
-        domain,  # リストの連接によりプロファイルの域を作成 
-        codomain # リストの連接によりプロファイルの余域を作成
+        domain,  # リストの連接によりプロファイルの域を作成
+        codomain  # リストの連接によりプロファイルの余域を作成
     ]
     return tensor_result
 
@@ -308,13 +321,18 @@ def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, strands_resul
     strand_to.extend(strand_to_y)
 
     strand_lattice_points = str([strand_from, strand_to])
-    mult = round(tensor_x["strands"][strand_x] * tensor_y["strands"][strand_y], 5)
+    mult = round(tensor_x["strands"][strand_x] *
+                 tensor_y["strands"][strand_y], 5)
     if DEBUG:
         print("---")
-        print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strands][strand_x]: {2}".format(strand_from_x, strand_to_x, tensor_x["strands"][strand_x]))
-        print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strands][strand_y]: {2}".format(strand_from_y, strand_to_y, tensor_y["strands"][strand_y]))
-        print("strand_from: {0}, strand_to: {1}".format(strand_from, strand_to))
-        print("tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: {0}".format(mult))
+        print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strands][strand_x]: {2}".format(
+            strand_from_x, strand_to_x, tensor_x["strands"][strand_x]))
+        print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strands][strand_y]: {2}".format(
+            strand_from_y, strand_to_y, tensor_y["strands"][strand_y]))
+        print("strand_from: {0}, strand_to: {1}".format(
+            strand_from, strand_to))
+        print(
+            "tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: {0}".format(mult))
     strands_result[strand_lattice_points] = mult
 
     return tensor_result, strands_result
@@ -335,11 +353,13 @@ def tensor_product(tensor_x, tensor_y):
 
     tensor_result = {}
     strands_result = {}
-    tensor_result = create_profile_tensor_product(tensor_x, tensor_y, tensor_result)
+    tensor_result = create_profile_tensor_product(
+        tensor_x, tensor_y, tensor_result)
 
     for strand_x in [item for item in list(tensor_x["strands"].keys())]:
         for strand_y in [item for item in list(tensor_y["strands"].keys())]:
-            tensor_result, strands_result = tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
+            tensor_result, strands_result = tensor_product_process(
+                tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
     tensor_result["strands"] = strands_result
 
     return tensor_result
@@ -349,6 +369,7 @@ def unit_tensor(list_x):
     """
     リストから単位テンソルを作成
     @param list_x リスト
+    @return return_teonor 単位テンソル list_x -> list_x
     """
     tensor_result = {}
     tensor_result["profile"] = [list_x, list_x]
@@ -367,7 +388,6 @@ def unit_tensor(list_x):
             tensor_result["strands"][str(list(item))] = 1
 
     return tensor_result
-
 
 
 def delta(list_x):
@@ -395,7 +415,6 @@ def delta(list_x):
     if is_number:
         base_list_a = [create_n_bar(item) for item in domain]
         base_list_a_a = [create_n_bar(item) for item in codomain]
-    
 
     for item in itertools.product(create_indexies(base_list_a), create_indexies(base_list_a_a)):
         x = item[DOMAIN_LATTICE_POINT]
@@ -461,13 +480,18 @@ def jointification_process(tensor_x, tensor_y, strand_x, strand_y, strands_resul
 
     if strand_to_x == strand_from_y:  # tensor_x のあるストランドの終点と、tensor_y のあるストランドの始点が一致した場合
         strand_lattice_points = str([strand_from, strand_to])
-        mult = round(tensor_x["strands"][strand_x] * tensor_y["strands"][strand_y], 5)
+        mult = round(tensor_x["strands"][strand_x] *
+                     tensor_y["strands"][strand_y], 5)
         if DEBUG:
             print("---")
-            print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strands][strand_x]: {2}".format(strand_from_x, strand_to_x, tensor_x["strands"][strand_x]))
-            print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strands][strand_y]: {2}".format(strand_from_y, strand_to_y, tensor_y["strands"][strand_y]))
-            print("strand_from: {0}, strand_to: {1}".format(strand_from, strand_to))
-            print("tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: {0}".format(mult))
+            print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strands][strand_x]: {2}".format(
+                strand_from_x, strand_to_x, tensor_x["strands"][strand_x]))
+            print("  strand_from_y: {0}, strand_to_y: {1}, tensor_y[strands][strand_y]: {2}".format(
+                strand_from_y, strand_to_y, tensor_y["strands"][strand_y]))
+            print("strand_from: {0}, strand_to: {1}".format(
+                strand_from, strand_to))
+            print(
+                "tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: {0}".format(mult))
         strands_result[strand_lattice_points] = mult
 
     return tensor_result, strands_result
@@ -484,13 +508,14 @@ def jointification(tensor_x, tensor_y):
     strands_result = {}
     if check_composable(tensor_x, tensor_y):
         tensor_result["profile"] = [
-            tensor_x["profile"][DOMAIN_PROFILE], 
+            tensor_x["profile"][DOMAIN_PROFILE],
             tensor_y["profile"][CODOMAIN_PROFILE]
         ]
 
     for strand_x in list(tensor_x["strands"].keys()):
         for strand_y in list(tensor_y["strands"].keys()):
-            tensor_result, strands_result = jointification_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
+            tensor_result, strands_result = jointification_process(
+                tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
     tensor_result["strands"] = strands_result
 
     return tensor_result
@@ -510,14 +535,14 @@ def conditionalization(tensor_x, concat_start_index):
 
     codomain_profile = tensor_x["profile"][CODOMAIN_PROFILE]
     tensor_result["profile"] = [
-        codomain_profile[0:concat_start_index - 1], 
+        codomain_profile[0:concat_start_index - 1],
         codomain_profile[concat_start_index - 1:len(codomain_profile)]
     ]
 
     for strand in list(tensor_x["strands"].keys()):
         _, strand_to = get_lattice_points(strand)
         total_strand_from = str([strand_to[0:concat_start_index - 1]])
-        if total_strand_from in total.keys(): # もし既にキー strand_result に値が設定されていれば加算
+        if total_strand_from in total.keys():  # もし既にキー strand_result に値が設定されていれば加算
             total[total_strand_from] += tensor_x["strands"][strand]
         else:
             total[total_strand_from] = tensor_x["strands"][strand]
@@ -525,8 +550,10 @@ def conditionalization(tensor_x, concat_start_index):
     for strand in list(tensor_x["strands"].keys()):
         _, strand_to = get_lattice_points(strand)
         total_strand_from = str([strand_to[0:concat_start_index - 1]])
-        strand_lattice_points = str([strand_to[0:concat_start_index - 1], strand_to[concat_start_index - 1:len(codomain_profile)]])
-        strands_result[strand_lattice_points] = tensor_x["strands"][strand] / total[total_strand_from]
+        strand_lattice_points = str(
+            [strand_to[0:concat_start_index - 1], strand_to[concat_start_index - 1:len(codomain_profile)]])
+        strands_result[strand_lattice_points] = tensor_x["strands"][strand] / \
+            total[total_strand_from]
     tensor_result["strands"] = strands_result
 
     return tensor_result
@@ -542,11 +569,13 @@ def first_marginalization(tensor, concat_start_index):
     if tensor["profile"][DOMAIN_PROFILE] == []:
         codomain_profile_tensor = tensor["profile"][CODOMAIN_PROFILE]
         domain_unit_tensor_a = codomain_profile_tensor[0:concat_start_index - 1]
-        domain_tensor_b = codomain_profile_tensor[concat_start_index - 1:len(codomain_profile_tensor)]
+        domain_tensor_b = codomain_profile_tensor[concat_start_index - 1:len(
+            codomain_profile_tensor)]
         unit_tensor_a = unit_tensor(domain_unit_tensor_a)
 
         if DEBUG:
-            print("codomain_profile_tensor: {0}".format(codomain_profile_tensor))
+            print("codomain_profile_tensor: {0}".format(
+                codomain_profile_tensor))
             print("domain_unit_tensor_a: {0}".format(domain_unit_tensor_a))
             print("domain_tensor_b: {0}".format(domain_tensor_b))
             print("unit_tensor_a: {0}".format(unit_tensor_a))
@@ -566,11 +595,13 @@ def second_marginalization(tensor, concat_start_index):
     if tensor["profile"][DOMAIN_PROFILE] == []:
         codomain_profile_tensor = tensor["profile"][CODOMAIN_PROFILE]
         domain_tensor_a = codomain_profile_tensor[0:concat_start_index - 1]
-        domain_unit_tensor_b = codomain_profile_tensor[concat_start_index - 1:len(codomain_profile_tensor)]
+        domain_unit_tensor_b = codomain_profile_tensor[concat_start_index - 1:len(
+            codomain_profile_tensor)]
         unit_tensor_b = unit_tensor(domain_unit_tensor_b)
 
         if DEBUG:
-            print("codomain_profile_tensor: {0}".format(codomain_profile_tensor))
+            print("codomain_profile_tensor: {0}".format(
+                codomain_profile_tensor))
             print("domain_tensor_a: {0}".format(domain_tensor_a))
             print("domain_unit_tensor_b: {0}".format(domain_unit_tensor_b))
             print("unit_tensor_b: {0}".format(unit_tensor_b))
@@ -579,6 +610,52 @@ def second_marginalization(tensor, concat_start_index):
     else:
         print("cannot compute second marginalization")
 
+
+def swap(list_x, concat_start_index):
+    """
+    リストからテンソル Xab を作成
+    @param list_x リスト
+    @param concat_start_index F の余域 の a と b の区切りとして、b の開始に関する index
+    @return tensor_result テンソル a#b -> b#a
+    """
+
+    tensor_result = {}
+    tensor_result["strands"] = {}
+    domain = list_x
+    codomain = []
+    codomain.extend(list_x[concat_start_index - 1:len(list_x)])
+    codomain.extend(list_x[0:concat_start_index - 1])
+    tensor_result["profile"] = [domain, codomain]
+    print(tensor_result["profile"])
+
+    is_number = True
+    for item in list_x:
+        is_number = is_number and type(item) == int
+
+    base_list_domain = list_x[0:concat_start_index - 1]
+    base_list_codomain = list_x[concat_start_index - 1:len(list_x)]
+
+    if is_number:
+        base_list_domain = [create_n_bar(item) for item in list_x[0:concat_start_index - 1]]
+        base_list_codomain = [create_n_bar(item) for item in list_x[concat_start_index - 1:len(list_x)]]
+    
+    for item in itertools.product(create_indexies(base_list_domain), create_indexies(base_list_codomain)):
+        domain_lattice_point = []
+        domain_lattice_point.extend(item[0])
+        domain_lattice_point.extend(item[1])
+
+        codomain_lattice_point = []
+        codomain_lattice_point.extend(item[1])
+        codomain_lattice_point.extend(item[0])
+
+        lattice_point = [
+            domain_lattice_point, 
+            codomain_lattice_point
+        ]
+
+        tensor_result["strands"][str(lattice_point)] = 1
+
+    return tensor_result
 
 
 def print_tensor(tensor):
@@ -659,90 +736,94 @@ def main():
     }
 
     tensor_e = {
-        "profile": [[1], [2, 2]], 
+        "profile": [[1], [2, 2]],
         "strands": {
-            "[[1], [1, 1]]": Fraction(1, 10), 
-            "[[1], [1, 2]]": Fraction(2, 10), 
-            "[[1], [2, 1]]": Fraction(3, 10), 
+            "[[1], [1, 1]]": Fraction(1, 10),
+            "[[1], [1, 2]]": Fraction(2, 10),
+            "[[1], [2, 1]]": Fraction(3, 10),
             "[[1], [2, 2]]": Fraction(4, 10)
         }
     }
 
     tensor_f = {
-        "profile": [[2], [2]], 
+        "profile": [[2], [2]],
         "strands": {
-            "[[1], [1]]": Fraction(1, 2), 
-            "[[1], [2]]": Fraction(1, 2), 
-            "[[2], [1]]": Fraction(1, 2), 
+            "[[1], [1]]": Fraction(1, 2),
+            "[[1], [2]]": Fraction(1, 2),
+            "[[2], [1]]": Fraction(1, 2),
             "[[2], [2]]": Fraction(1, 2)
         }
     }
 
     tensor_g = {
-        "profile": [[], [2, 2]], 
+        "profile": [[], [2, 2]],
         "strands": {
-            "[[], [1, 1]]": Fraction(1, 10), 
-            "[[], [1, 2]]": Fraction(2, 10), 
-            "[[], [2, 1]]": Fraction(3, 10), 
+            "[[], [1, 1]]": Fraction(1, 10),
+            "[[], [1, 2]]": Fraction(2, 10),
+            "[[], [2, 1]]": Fraction(3, 10),
             "[[], [2, 2]]": Fraction(4, 10)
         }
     }
 
     tensor_label1 = {
-        "profile": [[['A', 'B']], [['H', 'M', 'L']]], 
+        "profile": [[['A', 'B']], [['H', 'M', 'L']]],
         "strands": {
-            "[['A'], ['H']]": Fraction(2, 10), 
-            "[['A'], ['M']]": Fraction(6, 10), 
-            "[['A'], ['L']]": Fraction(2, 10), 
-            "[['B'], ['H']]": Fraction(1, 10), 
-            "[['B'], ['M']]": Fraction(5, 10), 
+            "[['A'], ['H']]": Fraction(2, 10),
+            "[['A'], ['M']]": Fraction(6, 10),
+            "[['A'], ['L']]": Fraction(2, 10),
+            "[['B'], ['H']]": Fraction(1, 10),
+            "[['B'], ['M']]": Fraction(5, 10),
             "[['B'], ['L']]": Fraction(4, 10)
         }
     }
 
     tensor_label2 = {
-        "profile": [[['H', 'M', 'L']], [['a', 'b']]], 
+        "profile": [[['H', 'M', 'L']], [['a', 'b']]],
         "strands": {
-            "[['H'], ['a']]": Fraction(1, 10), 
-            "[['H'], ['b']]": Fraction(9, 10), 
-            "[['M'], ['a']]": Fraction(2, 10), 
-            "[['M'], ['b']]": Fraction(8, 10), 
+            "[['H'], ['a']]": Fraction(1, 10),
+            "[['H'], ['b']]": Fraction(9, 10),
+            "[['M'], ['a']]": Fraction(2, 10),
+            "[['M'], ['b']]": Fraction(8, 10),
             "[['L'], ['a']]": Fraction(3, 10),
-            "[['L'], ['b']]": Fraction(7, 10), 
+            "[['L'], ['b']]": Fraction(7, 10),
         }
     }
 
-
     # テンソル計算
     for tensor_result in [
-        composition(tensor_a, tensor_b), 
-        composition(tensor_label1, tensor_label2), 
-        identity(tensor_a),  
-        composition(tensor_a, unit_tensor(tensor_a["profile"][CODOMAIN_PROFILE])), 
-        composition(tensor_label1, unit_tensor(tensor_label1["profile"][CODOMAIN_PROFILE])), 
-        partial_composition(tensor_a, tensor_c, 2), 
-        composition(tensor_domain_empty_list, tensor_c), 
-        composition(composition(composition(tensor_c, tensor_d), tensor_d), tensor_d), 
-        tensor_product(tensor_label1, tensor_label2), 
-        tensor_product(tensor_c, tensor_d), 
+        composition(tensor_a, tensor_b),
+        composition(tensor_label1, tensor_label2),
+        identity(tensor_a),
+        composition(tensor_a, unit_tensor(
+            tensor_a["profile"][CODOMAIN_PROFILE])),
+        composition(tensor_label1, unit_tensor(
+            tensor_label1["profile"][CODOMAIN_PROFILE])),
+        partial_composition(tensor_a, tensor_c, 2),
+        composition(tensor_domain_empty_list, tensor_c),
+        composition(composition(composition(
+            tensor_c, tensor_d), tensor_d), tensor_d),
+        tensor_product(tensor_label1, tensor_label2),
+        tensor_product(tensor_c, tensor_d),
         tensor_product(tensor_domain_empty_list, tensor_d),
         delta([2, 2]),
-        delta([['a', 'b']]), 
-        exclamation([2, 2, 3]), 
-        exclamation([['a', 'b', 'c']]), 
-        unit_tensor([2, 2, 3]), 
-        unit_tensor([['a', 'b', 'c']]), 
-        jointification(tensor_domain_empty_list, tensor_c), 
-        first_marginalization(tensor_g, 2), 
-        second_marginalization(tensor_g, 2), 
-        conditionalization(tensor_g, 2)
+        delta([['a', 'b']]),
+        exclamation([2, 2, 3]),
+        exclamation([['a', 'b', 'c']]),
+        unit_tensor([2, 2, 3]),
+        unit_tensor([['a', 'b', 'c']]),
+        jointification(tensor_domain_empty_list, tensor_c),
+        first_marginalization(tensor_g, 2),
+        second_marginalization(tensor_g, 2),
+        conditionalization(tensor_g, 2), 
+        swap([2, 2, 3], 3)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
-        print_tensor(tensor_result) # テンソルを標準出力
+        print_tensor(tensor_result)  # テンソルを標準出力
 
-    tensor_result, domain_label_index, codomain_label_index = convert_label2index(tensor_label1)
-    print(tensor_result, domain_label_index, codomain_label_index)
-    
+    # tensor_result, domain_label_index, codomain_label_index = convert_label2index(
+    #     tensor_label1)
+    # print(tensor_result, domain_label_index, codomain_label_index)
+
 
 if __name__ == "__main__":
     main()
