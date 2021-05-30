@@ -22,6 +22,7 @@ FXTens の Python による表現
 - テンソル積: メソッド tensor_product
 - 第一周辺化: メソッド first_marginalization
 - 第二周辺化: メソッド second_marginalization
+- 反転: メソッド: conversion
 
 テンソルを構成
 - 単位テンソル: メソッド unit_tensor
@@ -29,8 +30,6 @@ FXTens の Python による表現
 - マルコフ・テンソル ！: メソッド exclamation
 - マルコフ・テンソル Xa,b (スワップ): メソッド swap
 """
-
-import numpy as np
 import pandas as pd
 from fractions import Fraction
 import itertools
@@ -77,8 +76,8 @@ def convert_label2index(tensor_x):
     @return domain_label_index 域について文字列のラベルとインデックスの辞書
     @return codomain_label_index 余域について文字列のラベルとインデックスの辞書
     [変換元]
-    tensor_kagee = {
-        "profile": [['A', 'B'], ['H', 'M', 'L']], 
+    tensor_x = {
+        "profile": [[['A', 'B']], [['H', 'M', 'L']]], 
         "strands": {
             "[['A'], ['H']]": Fraction(2, 10), 
             "[['A'], ['M']]": Fraction(6, 10), 
@@ -89,7 +88,7 @@ def convert_label2index(tensor_x):
         }
     }
     [変換先]
-    tensor_kagee = {
+    tensor_result = {
         "profile": [[2], [3]], 
         "strands": {
             "[[1], [1]]": Fraction(2, 10), 
@@ -249,6 +248,8 @@ def composition(tensor_x, tensor_y):
                     tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
     else:
         print("cannot compose")
+    print("xxx!!!strands_result")
+    print(strands_result)
     tensor_result["strands"] = strands_result
 
     return tensor_result
@@ -278,7 +279,7 @@ def partial_composition(tensor_a_b_sharp_c, tensor_b_d, concat_start_index):
         print(codomain_profile_tensor_a_b_sharp_c[concat_start_index - 1:len(
             codomain_profile_tensor_a_b_sharp_c)])
         print("unit_tensor_c")
-        print_tensor(unit_tensor_c)
+        print(unit_tensor_c)
 
     return composition(tensor_a_b_sharp_c, tensor_product(tensor_b_d, unit_tensor_c))
 
@@ -313,10 +314,9 @@ def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, strands_resul
     strand_from_y, strand_to_y = get_lattice_points(strand_y)
 
     strand_from = []
+    strand_to = []
     strand_from.extend(strand_from_x)
     strand_from.extend(strand_from_y)
-
-    strand_to = []
     strand_to.extend(strand_to_x)
     strand_to.extend(strand_to_y)
 
@@ -385,7 +385,11 @@ def unit_tensor(list_x):
 
     for item in itertools.product(create_indexies(base_list), create_indexies(base_list)):
         if item[DOMAIN_LATTICE_POINT] == item[CODOMAIN_LATTICE_POINT]:
-            tensor_result["strands"][str(list(item))] = 1
+            if is_number:
+                tensor_result["strands"][str(list(item))] = 1
+            else:
+                tensor_result["strands"][str([[[item_] for item_ in item[0]], [[item_] for item_ in item[1]]])] = 1
+
 
     return tensor_result
 
@@ -430,7 +434,10 @@ def delta(list_x):
             print("eq(x_, x): {0}".format(eq(x_, x)))
             print("eq(x__, x): {0}".format(eq(x__, x)))
 
-        tensor_result["strands"][str(item)] = eq(x_, x) * eq(x__, x)
+        if is_number:
+            tensor_result["strands"][str(item)] = eq(x_, x) * eq(x__, x)
+        else: 
+            tensor_result["strands"][str([[[item_] for item_ in item[0]], [[item_] for item_ in item[1]]])] = eq(x_, x) * eq(x__, x)
 
     return tensor_result
 
@@ -449,12 +456,15 @@ def exclamation(list_x):
     for item in list_x:
         is_number = is_number and type(item) == int
 
-    base_list = list_x
+    base_list = [item for item in list_x]
     if is_number:
         base_list = [create_n_bar(item) for item in list_x]
 
     for item in itertools.product(create_indexies(base_list), [[]]):
-        tensor_result["strands"][str(list(item))] = 1
+        if is_number:
+            tensor_result["strands"][str(list(item))] = 1
+        else:
+            tensor_result["strands"][str([[[item_] for item_ in item[0]], []])] = 1
 
     return tensor_result
 
@@ -475,8 +485,13 @@ def jointification_process(tensor_x, tensor_y, strand_x, strand_y, strands_resul
 
     strand_from = []
     strand_to = []
-    strand_to.extend(strand_from_y)
+    strand_to.extend(strand_to_x)
+    # print("strand_to_x")
+    # print(strand_to_x)
     strand_to.extend(strand_to_y)
+    # print("strand_to_y")
+    # print(strand_to_y)
+    # print(strand_to)
 
     if strand_to_x == strand_from_y:  # tensor_x のあるストランドの終点と、tensor_y のあるストランドの始点が一致した場合
         strand_lattice_points = str([strand_from, strand_to])
@@ -562,11 +577,12 @@ def conditionalization(tensor_x, concat_start_index):
 
 def first_marginalization(tensor, concat_start_index):
     """
-    部分結合を算出
+    第一周辺化を算出
     @param tensor テンソル F: [] -> a&b
     @param concat_start_index F の余域 の a と b の区切りとして、b の開始に関する index
     @return tensor_result テンソル [] -> a
     """
+    return_tensor = {}
     if tensor["profile"][DOMAIN_PROFILE] == []:
         codomain_profile_tensor = tensor["profile"][CODOMAIN_PROFILE]
         domain_unit_tensor_a = codomain_profile_tensor[0:concat_start_index - 1]
@@ -580,15 +596,20 @@ def first_marginalization(tensor, concat_start_index):
             print("domain_unit_tensor_a: {0}".format(domain_unit_tensor_a))
             print("domain_tensor_b: {0}".format(domain_tensor_b))
             print("unit_tensor_a: {0}".format(unit_tensor_a))
+            print("tensor_product(unit_tensor_a, exclamation(domain_tensor_b))")
+            print(tensor_product(unit_tensor_a, exclamation(domain_tensor_b)))
+            print_tensor(composition(tensor, tensor_product(unit_tensor_a, exclamation(domain_tensor_b))))
 
-        return composition(tensor, tensor_product(unit_tensor_a, exclamation(domain_tensor_b)))
+        return_tensor = composition(tensor, tensor_product(unit_tensor_a, exclamation(domain_tensor_b)))
+
+        return return_tensor
     else:
         print("cannot compute first marginalization")
 
 
 def second_marginalization(tensor, concat_start_index):
     """
-    部分結合を算出
+    第二周辺化を算出
     @param tensor テンソル F: [] -> a&b
     @param concat_start_index F の余域 の a と b の区切りとして、b の開始に関する index
     @return tensor_result テンソル [] -> b
@@ -607,7 +628,9 @@ def second_marginalization(tensor, concat_start_index):
             print("domain_unit_tensor_b: {0}".format(domain_unit_tensor_b))
             print("unit_tensor_b: {0}".format(unit_tensor_b))
 
-        return composition(tensor, tensor_product(exclamation(domain_tensor_a), unit_tensor_b))
+        return_tensor = composition(tensor, tensor_product(exclamation(domain_tensor_a), unit_tensor_b))
+
+        return return_tensor
     else:
         print("cannot compute second marginalization")
 
@@ -639,7 +662,7 @@ def swap(list_a, list_b):
     for item in list_b:
         is_number = is_number and type(item) == int
 
-    base_list_domain = list_b
+    base_list_domain = list_a
     base_list_codomain = list_b
 
     if is_number:
@@ -648,12 +671,18 @@ def swap(list_a, list_b):
     
     for item in itertools.product(create_indexies(base_list_domain), create_indexies(base_list_codomain)):
         domain_lattice_point = []
-        domain_lattice_point.extend(item[0])
-        domain_lattice_point.extend(item[1])
-
         codomain_lattice_point = []
-        codomain_lattice_point.extend(item[1])
-        codomain_lattice_point.extend(item[0])
+
+        if is_number:
+            domain_lattice_point.extend(item[0])
+            domain_lattice_point.extend(item[1])
+            codomain_lattice_point.extend(item[1])
+            codomain_lattice_point.extend(item[0])
+        else: 
+            domain_lattice_point.extend([[item_] for item_ in item[0]])
+            domain_lattice_point.extend([[item_] for item_ in item[1]])
+            codomain_lattice_point.extend([[item_] for item_ in item[1]])
+            codomain_lattice_point.extend([[item_] for item_ in item[0]])
 
         lattice_point = [
             domain_lattice_point, 
@@ -672,6 +701,34 @@ def conversion(tensor_empty_a, tensor_a_b):
     @param tensor_a_b テンソル G a -> b
     @return tensor_result テンソル b -> a
     """
+    print("!!!conversion start!!!")
+    print("!!!tensor_empty_a before!!!")
+    print_tensor(tensor_empty_a)
+    print("!!!tensor_a_b before!!!")
+    print_tensor(tensor_a_b)
+    print("-!!!!!start jointification")
+    print_tensor(jointification(tensor_empty_a, tensor_a_b))
+    print("-!!!!!end jointification")
+    print("-!!!start swap")
+    print_tensor(
+        swap( # Xa,b: a#b => b#a
+            tensor_a_b["profile"][DOMAIN_PROFILE], 
+            tensor_a_b["profile"][CODOMAIN_PROFILE]
+        )
+    )
+    print("-!!!end swap")
+    print("-!!!start composition")
+    print_tensor(
+        composition(
+            jointification(tensor_empty_a, tensor_a_b), # [] -> a, a -> b => [] -> a#b
+            swap( # Xa,b: a#b => b#a
+                tensor_a_b["profile"][DOMAIN_PROFILE], 
+                tensor_a_b["profile"][CODOMAIN_PROFILE]
+            )
+        ) # [] -> b#a
+    )
+    print("-!!!end composition")
+
     return conditionalization(
         composition(
             jointification(tensor_empty_a, tensor_a_b), # [] -> a, a -> b => [] -> a#b
@@ -794,24 +851,34 @@ def main():
     tensor_label1 = {
         "profile": [[['A', 'B']], [['H', 'M', 'L']]],
         "strands": {
-            "[['A'], ['H']]": Fraction(2, 10),
-            "[['A'], ['M']]": Fraction(6, 10),
-            "[['A'], ['L']]": Fraction(2, 10),
-            "[['B'], ['H']]": Fraction(1, 10),
-            "[['B'], ['M']]": Fraction(5, 10),
-            "[['B'], ['L']]": Fraction(4, 10)
+            "[[['A']], [['H']]]": Fraction(2, 10),
+            "[[['A']], [['M']]]": Fraction(6, 10),
+            "[[['A']], [['L']]]": Fraction(2, 10),
+            "[[['B']], [['H']]]": Fraction(1, 10),
+            "[[['B']], [['M']]]": Fraction(5, 10),
+            "[[['B']], [['L']]]": Fraction(4, 10)
         }
     }
 
     tensor_label2 = {
         "profile": [[['H', 'M', 'L']], [['a', 'b']]],
         "strands": {
-            "[['H'], ['a']]": Fraction(1, 10),
-            "[['H'], ['b']]": Fraction(9, 10),
-            "[['M'], ['a']]": Fraction(2, 10),
-            "[['M'], ['b']]": Fraction(8, 10),
-            "[['L'], ['a']]": Fraction(3, 10),
-            "[['L'], ['b']]": Fraction(7, 10),
+            "[[['H']], [['a']]]": Fraction(1, 10),
+            "[[['H']], [['b']]]": Fraction(9, 10),
+            "[[['M']], [['a']]]": Fraction(2, 10),
+            "[[['M']], [['b']]]": Fraction(8, 10),
+            "[[['L']], [['a']]]": Fraction(3, 10),
+            "[[['L']], [['b']]]": Fraction(7, 10),
+        }
+    }
+
+    tensor_label_empty_domain = {
+        "profile": [[], [['a', 'b'], ['c', 'd']]],
+        "strands": {
+            "[[], [['a'], ['c']]]": Fraction(1, 4),
+            "[[], [['a'], ['d']]]": Fraction(1, 4),
+            "[[], [['b'], ['c']]]": Fraction(1, 4),
+            "[[], [['b'], ['d']]]": Fraction(1, 4)
         }
     }
 
@@ -834,14 +901,17 @@ def main():
         delta([2, 2]),
         delta([['a', 'b']]),
         exclamation([2, 2, 3]),
-        exclamation([['a', 'b', 'c']]),
+        exclamation([['a', 'b'], ['c', 'd'], ['e', 'f', 'g']]),
         unit_tensor([2, 2, 3]),
-        unit_tensor([['a', 'b', 'c']]),
+        unit_tensor([['a', 'b'], ['c', 'd'], ['e', 'f', 'g']]),
         jointification(tensor_domain_empty_list, tensor_c),
         first_marginalization(tensor_g, 2),
+        first_marginalization(tensor_label_empty_domain, 2), 
         second_marginalization(tensor_g, 2),
+        second_marginalization(tensor_label_empty_domain, 2),
         conditionalization(tensor_g, 2), 
         swap([2, 2], [3]), 
+        swap([['a', 'b'], ['c', 'd']], [['e', 'f', 'g']]), 
         conversion(tensor_domain_empty_list, tensor_a)
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
