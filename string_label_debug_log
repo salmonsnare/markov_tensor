@@ -1,0 +1,40 @@
+---
+  strand_from_x: [['夏']], strand_to_x: [['暑い']], tensor_x[strand_x]: 4/5
+  strand_from_y: [['暑い']], strand_to_y: [['外出することがある']], tensor_y[strand_y]: 1/2
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 2/5
+---
+  strand_from_x: [['夏']], strand_to_x: [['暑い']], tensor_x[strand_x]: 4/5
+  strand_from_y: [['暑い']], strand_to_y: [['外出することがない']], tensor_y[strand_y]: 1/2
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 2/5
+---
+  strand_from_x: [['夏']], strand_to_x: [['寒い']], tensor_x[strand_x]: 1/5
+  strand_from_y: [['寒い']], strand_to_y: [['外出することがある']], tensor_y[strand_y]: 9/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 9/50
+---
+  strand_from_x: [['夏']], strand_to_x: [['寒い']], tensor_x[strand_x]: 1/5
+  strand_from_y: [['寒い']], strand_to_y: [['外出することがない']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/50
+---
+  strand_from_x: [['冬']], strand_to_x: [['暑い']], tensor_x[strand_x]: 7/10
+  strand_from_y: [['暑い']], strand_to_y: [['外出することがある']], tensor_y[strand_y]: 1/2
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 7/20
+---
+  strand_from_x: [['冬']], strand_to_x: [['暑い']], tensor_x[strand_x]: 7/10
+  strand_from_y: [['暑い']], strand_to_y: [['外出することがない']], tensor_y[strand_y]: 1/2
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 7/20
+---
+  strand_from_x: [['冬']], strand_to_x: [['寒い']], tensor_x[strand_x]: 3/10
+  strand_from_y: [['寒い']], strand_to_y: [['外出することがある']], tensor_y[strand_y]: 9/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 27/100
+---
+  strand_from_x: [['冬']], strand_to_x: [['寒い']], tensor_x[strand_x]: 3/10
+  strand_from_y: [['寒い']], strand_to_y: [['外出することがない']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/100
+xxx!!!strands_result
+{"[[['夏']], [['外出することがある']]]": Fraction(29, 50), "[[['夏']], [['外出することがない']]]": Fraction(21, 50), "[[['冬']], [['外出することがある']]]": Fraction(31, 50), "[[['冬']], [['外出することがない']]]": Fraction(19, 50)}
+---
+profile:  [[['夏', '冬']], [['外出することがある', '外出することがない']]]
+[[['夏']], [['外出することがある']]] 29/50
+[[['夏']], [['外出することがない']]] 21/50
+[[['冬']], [['外出することがある']]] 31/50
+[[['冬']], [['外出することがない']]] 19/50
