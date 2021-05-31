@@ -4790,3 +4790,1849 @@ profile:  [[['H', 'M', 'L'], ['S+', 'S-'], ['C+', 'C-']], [['MO+', 'MO-', 'WO+',
 [[['L'], ['S-'], ['C-']], [['MO-']]] 8/19
 [[['L'], ['S-'], ['C-']], [['WO+']]] 12/95
 [[['L'], ['S-'], ['C-']], [['WO-']]] 7/19
+x: ['M']
+x_: ['M']
+x__: ['M']
+eq(x_, x): 1
+eq(x__, x): 1
+x: ['M']
+x_: ['M']
+x__: ['W']
+eq(x_, x): 1
+eq(x__, x): 0
+x: ['M']
+x_: ['W']
+x__: ['M']
+eq(x_, x): 0
+eq(x__, x): 1
+x: ['M']
+x_: ['W']
+x__: ['W']
+eq(x_, x): 0
+eq(x__, x): 0
+x: ['W']
+x_: ['M']
+x__: ['M']
+eq(x_, x): 0
+eq(x__, x): 0
+x: ['W']
+x_: ['M']
+x__: ['W']
+eq(x_, x): 0
+eq(x__, x): 1
+x: ['W']
+x_: ['W']
+x__: ['M']
+eq(x_, x): 1
+eq(x__, x): 0
+x: ['W']
+x_: ['W']
+x__: ['W']
+eq(x_, x): 1
+eq(x__, x): 1
+tensor_x
+---
+profile:  [[['M', 'W']], [['H', 'M', 'L']]]
+[[['M']], [['H']]] 1/5
+[[['M']], [['M']]] 3/5
+[[['M']], [['L']]] 1/5
+[[['W']], [['H']]] 1/10
+[[['W']], [['M']]] 1/2
+[[['W']], [['L']]] 2/5
+tensor_y
+---
+profile:  [[['M', 'W']], [['S+', 'S-']]]
+[[['M']], [['S+']]] 0
+[[['M']], [['S-']]] 1
+[[['W']], [['S+']]] 1/2
+[[['W']], [['S-']]] 1/2
+---
+  strand_from_x: [['M']], strand_to_x: [['H']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['M']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 0
+strand_from: [['M'], ['M']], strand_to: [['H'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['H']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['M']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1
+strand_from: [['M'], ['M']], strand_to: [['H'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [['M']], strand_to_x: [['H']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['W']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['M'], ['W']], strand_to: [['H'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/10
+---
+  strand_from_x: [['M']], strand_to_x: [['H']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['W']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['M'], ['W']], strand_to: [['H'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/10
+---
+  strand_from_x: [['M']], strand_to_x: [['M']], tensor_x[strands][strand_x]: 3/5
+  strand_from_y: [['M']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 0
+strand_from: [['M'], ['M']], strand_to: [['M'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M']], tensor_x[strands][strand_x]: 3/5
+  strand_from_y: [['M']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1
+strand_from: [['M'], ['M']], strand_to: [['M'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/5
+---
+  strand_from_x: [['M']], strand_to_x: [['M']], tensor_x[strands][strand_x]: 3/5
+  strand_from_y: [['W']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['M'], ['W']], strand_to: [['M'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/10
+---
+  strand_from_x: [['M']], strand_to_x: [['M']], tensor_x[strands][strand_x]: 3/5
+  strand_from_y: [['W']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['M'], ['W']], strand_to: [['M'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/10
+---
+  strand_from_x: [['M']], strand_to_x: [['L']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['M']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 0
+strand_from: [['M'], ['M']], strand_to: [['L'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['L']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['M']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1
+strand_from: [['M'], ['M']], strand_to: [['L'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [['M']], strand_to_x: [['L']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['W']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['M'], ['W']], strand_to: [['L'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/10
+---
+  strand_from_x: [['M']], strand_to_x: [['L']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['W']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['M'], ['W']], strand_to: [['L'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/10
+---
+  strand_from_x: [['W']], strand_to_x: [['H']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 0
+strand_from: [['W'], ['M']], strand_to: [['H'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['H']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1
+strand_from: [['W'], ['M']], strand_to: [['H'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/10
+---
+  strand_from_x: [['W']], strand_to_x: [['H']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['W']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['W'], ['W']], strand_to: [['H'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/20
+---
+  strand_from_x: [['W']], strand_to_x: [['H']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['W']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['W'], ['W']], strand_to: [['H'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/20
+---
+  strand_from_x: [['W']], strand_to_x: [['M']], tensor_x[strands][strand_x]: 1/2
+  strand_from_y: [['M']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 0
+strand_from: [['W'], ['M']], strand_to: [['M'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M']], tensor_x[strands][strand_x]: 1/2
+  strand_from_y: [['M']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1
+strand_from: [['W'], ['M']], strand_to: [['M'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/2
+---
+  strand_from_x: [['W']], strand_to_x: [['M']], tensor_x[strands][strand_x]: 1/2
+  strand_from_y: [['W']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['W'], ['W']], strand_to: [['M'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/4
+---
+  strand_from_x: [['W']], strand_to_x: [['M']], tensor_x[strands][strand_x]: 1/2
+  strand_from_y: [['W']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['W'], ['W']], strand_to: [['M'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/4
+---
+  strand_from_x: [['W']], strand_to_x: [['L']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 0
+strand_from: [['W'], ['M']], strand_to: [['L'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['L']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1
+strand_from: [['W'], ['M']], strand_to: [['L'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 2/5
+---
+  strand_from_x: [['W']], strand_to_x: [['L']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['W']], strand_to_y: [['S+']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['W'], ['W']], strand_to: [['L'], ['S+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [['W']], strand_to_x: [['L']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['W']], strand_to_y: [['S-']], tensor_y[strands][strand_y]: 1/2
+strand_from: [['W'], ['W']], strand_to: [['L'], ['S-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 1
+  strand_from_y: [['M'], ['M']], strand_to_y: [['H'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 1
+  strand_from_y: [['M'], ['M']], strand_to_y: [['H'], ['S-']], tensor_y[strand_y]: 1/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/5
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 1
+  strand_from_y: [['M'], ['M']], strand_to_y: [['M'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 1
+  strand_from_y: [['M'], ['M']], strand_to_y: [['M'], ['S-']], tensor_y[strand_y]: 3/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/5
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 1
+  strand_from_y: [['M'], ['M']], strand_to_y: [['L'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 1
+  strand_from_y: [['M'], ['M']], strand_to_y: [['L'], ['S-']], tensor_y[strand_y]: 1/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/5
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['H'], ['S+']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['H'], ['S-']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['M'], ['S+']], tensor_y[strand_y]: 3/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['M'], ['S-']], tensor_y[strand_y]: 3/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['L'], ['S+']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['L'], ['S-']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['H'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['H'], ['S-']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['M'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['M'], ['S-']], tensor_y[strand_y]: 1/2
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['L'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['L'], ['S-']], tensor_y[strand_y]: 2/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['W']], strand_to_y: [['H'], ['S+']], tensor_y[strand_y]: 1/20
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['W']], strand_to_y: [['H'], ['S-']], tensor_y[strand_y]: 1/20
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['W']], strand_to_y: [['M'], ['S+']], tensor_y[strand_y]: 1/4
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['W']], strand_to_y: [['M'], ['S-']], tensor_y[strand_y]: 1/4
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['W']], strand_to_y: [['L'], ['S+']], tensor_y[strand_y]: 1/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['W']], strand_to_y: [['L'], ['S-']], tensor_y[strand_y]: 1/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['M']], strand_to_y: [['H'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['M']], strand_to_y: [['H'], ['S-']], tensor_y[strand_y]: 1/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['M']], strand_to_y: [['M'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['M']], strand_to_y: [['M'], ['S-']], tensor_y[strand_y]: 3/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['M']], strand_to_y: [['L'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['M']], strand_to_y: [['L'], ['S-']], tensor_y[strand_y]: 1/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['H'], ['S+']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['H'], ['S-']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['M'], ['S+']], tensor_y[strand_y]: 3/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['M'], ['S-']], tensor_y[strand_y]: 3/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['L'], ['S+']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['W']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['W']], strand_to_y: [['L'], ['S-']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['H'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['H'], ['S-']], tensor_y[strand_y]: 1/10
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['M'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['M'], ['S-']], tensor_y[strand_y]: 1/2
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['L'], ['S+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['M']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['M']], strand_to_y: [['L'], ['S-']], tensor_y[strand_y]: 2/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['W']], strand_to_y: [['H'], ['S+']], tensor_y[strand_y]: 1/20
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/20
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['W']], strand_to_y: [['H'], ['S-']], tensor_y[strand_y]: 1/20
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/20
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['W']], strand_to_y: [['M'], ['S+']], tensor_y[strand_y]: 1/4
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/4
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['W']], strand_to_y: [['M'], ['S-']], tensor_y[strand_y]: 1/4
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/4
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['W']], strand_to_y: [['L'], ['S+']], tensor_y[strand_y]: 1/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/5
+---
+  strand_from_x: [['W']], strand_to_x: [['W'], ['W']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['W']], strand_to_y: [['L'], ['S-']], tensor_y[strand_y]: 1/5
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/5
+tensor_x
+---
+profile:  [[['M', 'W']], [['H', 'M', 'L'], ['S+', 'S-']]]
+[[['M']], [['H'], ['S+']]] 0
+[[['M']], [['H'], ['S-']]] 1/5
+[[['M']], [['M'], ['S+']]] 0
+[[['M']], [['M'], ['S-']]] 3/5
+[[['M']], [['L'], ['S+']]] 0
+[[['M']], [['L'], ['S-']]] 1/5
+[[['W']], [['H'], ['S+']]] 1/20
+[[['W']], [['H'], ['S-']]] 1/20
+[[['W']], [['M'], ['S+']]] 1/4
+[[['W']], [['M'], ['S-']]] 1/4
+[[['W']], [['L'], ['S+']]] 1/5
+[[['W']], [['L'], ['S-']]] 1/5
+tensor_y
+---
+profile:  [[['O+', 'O-']], [['C+', 'C-']]]
+[[['O+']], [['C+']]] 1/5
+[[['O+']], [['C-']]] 4/5
+[[['O-']], [['C+']]] 0
+[[['O-']], [['C-']]] 1
+---
+  strand_from_x: [['M']], strand_to_x: [['H'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['M'], ['O+']], strand_to: [['H'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['H'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['M'], ['O+']], strand_to: [['H'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['H'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['M'], ['O-']], strand_to: [['H'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['H'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['M'], ['O-']], strand_to: [['H'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['H'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['M'], ['O+']], strand_to: [['H'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/25
+---
+  strand_from_x: [['M']], strand_to_x: [['H'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['M'], ['O+']], strand_to: [['H'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 4/25
+---
+  strand_from_x: [['M']], strand_to_x: [['H'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['M'], ['O-']], strand_to: [['H'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['H'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['M'], ['O-']], strand_to: [['H'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['M'], ['O+']], strand_to: [['M'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['M'], ['O+']], strand_to: [['M'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['M'], ['O-']], strand_to: [['M'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['M'], ['O-']], strand_to: [['M'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['S-']], tensor_x[strands][strand_x]: 3/5
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['M'], ['O+']], strand_to: [['M'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/25
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['S-']], tensor_x[strands][strand_x]: 3/5
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['M'], ['O+']], strand_to: [['M'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 12/25
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['S-']], tensor_x[strands][strand_x]: 3/5
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['M'], ['O-']], strand_to: [['M'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['M'], ['S-']], tensor_x[strands][strand_x]: 3/5
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['M'], ['O-']], strand_to: [['M'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/5
+---
+  strand_from_x: [['M']], strand_to_x: [['L'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['M'], ['O+']], strand_to: [['L'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['L'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['M'], ['O+']], strand_to: [['L'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['L'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['M'], ['O-']], strand_to: [['L'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['L'], ['S+']], tensor_x[strands][strand_x]: 0
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['M'], ['O-']], strand_to: [['L'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['L'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['M'], ['O+']], strand_to: [['L'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/25
+---
+  strand_from_x: [['M']], strand_to_x: [['L'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['M'], ['O+']], strand_to: [['L'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 4/25
+---
+  strand_from_x: [['M']], strand_to_x: [['L'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['M'], ['O-']], strand_to: [['L'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['M']], strand_to_x: [['L'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['M'], ['O-']], strand_to: [['L'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [['W']], strand_to_x: [['H'], ['S+']], tensor_x[strands][strand_x]: 1/20
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['W'], ['O+']], strand_to: [['H'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/100
+---
+  strand_from_x: [['W']], strand_to_x: [['H'], ['S+']], tensor_x[strands][strand_x]: 1/20
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['W'], ['O+']], strand_to: [['H'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/25
+---
+  strand_from_x: [['W']], strand_to_x: [['H'], ['S+']], tensor_x[strands][strand_x]: 1/20
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['W'], ['O-']], strand_to: [['H'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['H'], ['S+']], tensor_x[strands][strand_x]: 1/20
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['W'], ['O-']], strand_to: [['H'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/20
+---
+  strand_from_x: [['W']], strand_to_x: [['H'], ['S-']], tensor_x[strands][strand_x]: 1/20
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['W'], ['O+']], strand_to: [['H'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/100
+---
+  strand_from_x: [['W']], strand_to_x: [['H'], ['S-']], tensor_x[strands][strand_x]: 1/20
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['W'], ['O+']], strand_to: [['H'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/25
+---
+  strand_from_x: [['W']], strand_to_x: [['H'], ['S-']], tensor_x[strands][strand_x]: 1/20
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['W'], ['O-']], strand_to: [['H'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['H'], ['S-']], tensor_x[strands][strand_x]: 1/20
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['W'], ['O-']], strand_to: [['H'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/20
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['S+']], tensor_x[strands][strand_x]: 1/4
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['W'], ['O+']], strand_to: [['M'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/20
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['S+']], tensor_x[strands][strand_x]: 1/4
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['W'], ['O+']], strand_to: [['M'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['S+']], tensor_x[strands][strand_x]: 1/4
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['W'], ['O-']], strand_to: [['M'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['S+']], tensor_x[strands][strand_x]: 1/4
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['W'], ['O-']], strand_to: [['M'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/4
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['S-']], tensor_x[strands][strand_x]: 1/4
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['W'], ['O+']], strand_to: [['M'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/20
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['S-']], tensor_x[strands][strand_x]: 1/4
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['W'], ['O+']], strand_to: [['M'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['S-']], tensor_x[strands][strand_x]: 1/4
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['W'], ['O-']], strand_to: [['M'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['M'], ['S-']], tensor_x[strands][strand_x]: 1/4
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['W'], ['O-']], strand_to: [['M'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/4
+---
+  strand_from_x: [['W']], strand_to_x: [['L'], ['S+']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['W'], ['O+']], strand_to: [['L'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/25
+---
+  strand_from_x: [['W']], strand_to_x: [['L'], ['S+']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['W'], ['O+']], strand_to: [['L'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 4/25
+---
+  strand_from_x: [['W']], strand_to_x: [['L'], ['S+']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['W'], ['O-']], strand_to: [['L'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['L'], ['S+']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['W'], ['O-']], strand_to: [['L'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [['W']], strand_to_x: [['L'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O+']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 1/5
+strand_from: [['W'], ['O+']], strand_to: [['L'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/25
+---
+  strand_from_x: [['W']], strand_to_x: [['L'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O+']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 4/5
+strand_from: [['W'], ['O+']], strand_to: [['L'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 4/25
+---
+  strand_from_x: [['W']], strand_to_x: [['L'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O-']], strand_to_y: [['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [['W'], ['O-']], strand_to: [['L'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [['W']], strand_to_x: [['L'], ['S-']], tensor_x[strands][strand_x]: 1/5
+  strand_from_y: [['O-']], strand_to_y: [['C-']], tensor_y[strands][strand_y]: 1
+strand_from: [['W'], ['O-']], strand_to: [['L'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/5
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['H'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O+'], ['H'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['H'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O+'], ['H'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['H'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 1/25
+strand_from: [], strand_to: [['M'], ['O+'], ['H'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/250
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['H'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 4/25
+strand_from: [], strand_to: [['M'], ['O+'], ['H'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 2/125
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['M'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O+'], ['M'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['M'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O+'], ['M'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['M'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 3/25
+strand_from: [], strand_to: [['M'], ['O+'], ['M'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/250
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['M'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 12/25
+strand_from: [], strand_to: [['M'], ['O+'], ['M'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 6/125
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['L'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O+'], ['L'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['L'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O+'], ['L'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['L'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 1/25
+strand_from: [], strand_to: [['M'], ['O+'], ['L'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 1/250
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+']], tensor_x[strands][strand_x]: 1/10
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['L'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 4/25
+strand_from: [], strand_to: [['M'], ['O+'], ['L'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 2/125
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['H'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O-'], ['H'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['H'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O-'], ['H'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['H'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O-'], ['H'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['H'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 1/5
+strand_from: [], strand_to: [['M'], ['O-'], ['H'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 2/25
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['M'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O-'], ['M'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['M'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O-'], ['M'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['M'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O-'], ['M'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['M'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 3/5
+strand_from: [], strand_to: [['M'], ['O-'], ['M'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 6/25
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['L'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O-'], ['L'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['L'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O-'], ['L'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['L'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['M'], ['O-'], ['L'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-']], tensor_x[strands][strand_x]: 2/5
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['L'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 1/5
+strand_from: [], strand_to: [['M'], ['O-'], ['L'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 2/25
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['H'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 1/100
+strand_from: [], strand_to: [['W'], ['O+'], ['H'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/2000
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['H'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 1/25
+strand_from: [], strand_to: [['W'], ['O+'], ['H'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/500
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['H'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 1/100
+strand_from: [], strand_to: [['W'], ['O+'], ['H'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/2000
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['H'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 1/25
+strand_from: [], strand_to: [['W'], ['O+'], ['H'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/500
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['M'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 1/20
+strand_from: [], strand_to: [['W'], ['O+'], ['M'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/400
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['M'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 1/5
+strand_from: [], strand_to: [['W'], ['O+'], ['M'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/100
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['M'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 1/20
+strand_from: [], strand_to: [['W'], ['O+'], ['M'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/400
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['M'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 1/5
+strand_from: [], strand_to: [['W'], ['O+'], ['M'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/100
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['L'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 1/25
+strand_from: [], strand_to: [['W'], ['O+'], ['L'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/500
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['L'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 4/25
+strand_from: [], strand_to: [['W'], ['O+'], ['L'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/125
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['L'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 1/25
+strand_from: [], strand_to: [['W'], ['O+'], ['L'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/500
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+']], tensor_x[strands][strand_x]: 3/20
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['L'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 4/25
+strand_from: [], strand_to: [['W'], ['O+'], ['L'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 3/125
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['H'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['W'], ['O-'], ['H'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['H'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 1/20
+strand_from: [], strand_to: [['W'], ['O-'], ['H'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 7/400
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['H'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['W'], ['O-'], ['H'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['H'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 1/20
+strand_from: [], strand_to: [['W'], ['O-'], ['H'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 7/400
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['M'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['W'], ['O-'], ['M'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['M'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 1/4
+strand_from: [], strand_to: [['W'], ['O-'], ['M'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 7/80
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['M'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['W'], ['O-'], ['M'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['M'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 1/4
+strand_from: [], strand_to: [['W'], ['O-'], ['M'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 7/80
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['L'], ['S+'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['W'], ['O-'], ['L'], ['S+'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['L'], ['S+'], ['C-']], tensor_y[strands][strand_y]: 1/5
+strand_from: [], strand_to: [['W'], ['O-'], ['L'], ['S+'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 7/100
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['L'], ['S-'], ['C+']], tensor_y[strands][strand_y]: 0
+strand_from: [], strand_to: [['W'], ['O-'], ['L'], ['S-'], ['C+']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-']], tensor_x[strands][strand_x]: 7/20
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['L'], ['S-'], ['C-']], tensor_y[strands][strand_y]: 1/5
+strand_from: [], strand_to: [['W'], ['O-'], ['L'], ['S-'], ['C-']]
+tensor_x[strands][strand_x] * tensor_y[stdands][strand_y]: 7/100
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['H'], ['S+'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+'], ['H'], ['S+'], ['C+']], strand_to_y: [['H'], ['S+'], ['C+'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['H'], ['S+'], ['C-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+'], ['H'], ['S+'], ['C-']], strand_to_y: [['H'], ['S+'], ['C-'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['H'], ['S-'], ['C+']], tensor_x[strand_x]: 1/250
+  strand_from_y: [['M'], ['O+'], ['H'], ['S-'], ['C+']], strand_to_y: [['H'], ['S-'], ['C+'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/250
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['H'], ['S-'], ['C-']], tensor_x[strand_x]: 2/125
+  strand_from_y: [['M'], ['O+'], ['H'], ['S-'], ['C-']], strand_to_y: [['H'], ['S-'], ['C-'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 2/125
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['M'], ['S+'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+'], ['M'], ['S+'], ['C+']], strand_to_y: [['M'], ['S+'], ['C+'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['M'], ['S+'], ['C-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+'], ['M'], ['S+'], ['C-']], strand_to_y: [['M'], ['S+'], ['C-'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['M'], ['S-'], ['C+']], tensor_x[strand_x]: 3/250
+  strand_from_y: [['M'], ['O+'], ['M'], ['S-'], ['C+']], strand_to_y: [['M'], ['S-'], ['C+'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/250
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['M'], ['S-'], ['C-']], tensor_x[strand_x]: 6/125
+  strand_from_y: [['M'], ['O+'], ['M'], ['S-'], ['C-']], strand_to_y: [['M'], ['S-'], ['C-'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 6/125
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['L'], ['S+'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+'], ['L'], ['S+'], ['C+']], strand_to_y: [['L'], ['S+'], ['C+'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['L'], ['S+'], ['C-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+'], ['L'], ['S+'], ['C-']], strand_to_y: [['L'], ['S+'], ['C-'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['L'], ['S-'], ['C+']], tensor_x[strand_x]: 1/250
+  strand_from_y: [['M'], ['O+'], ['L'], ['S-'], ['C+']], strand_to_y: [['L'], ['S-'], ['C+'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1/250
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O+'], ['L'], ['S-'], ['C-']], tensor_x[strand_x]: 2/125
+  strand_from_y: [['M'], ['O+'], ['L'], ['S-'], ['C-']], strand_to_y: [['L'], ['S-'], ['C-'], ['M'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 2/125
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['H'], ['S+'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-'], ['H'], ['S+'], ['C+']], strand_to_y: [['H'], ['S+'], ['C+'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['H'], ['S+'], ['C-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-'], ['H'], ['S+'], ['C-']], strand_to_y: [['H'], ['S+'], ['C-'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['H'], ['S-'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-'], ['H'], ['S-'], ['C+']], strand_to_y: [['H'], ['S-'], ['C+'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['H'], ['S-'], ['C-']], tensor_x[strand_x]: 2/25
+  strand_from_y: [['M'], ['O-'], ['H'], ['S-'], ['C-']], strand_to_y: [['H'], ['S-'], ['C-'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 2/25
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['M'], ['S+'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-'], ['M'], ['S+'], ['C+']], strand_to_y: [['M'], ['S+'], ['C+'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['M'], ['S+'], ['C-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-'], ['M'], ['S+'], ['C-']], strand_to_y: [['M'], ['S+'], ['C-'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['M'], ['S-'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-'], ['M'], ['S-'], ['C+']], strand_to_y: [['M'], ['S-'], ['C+'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['M'], ['S-'], ['C-']], tensor_x[strand_x]: 6/25
+  strand_from_y: [['M'], ['O-'], ['M'], ['S-'], ['C-']], strand_to_y: [['M'], ['S-'], ['C-'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 6/25
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['L'], ['S+'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-'], ['L'], ['S+'], ['C+']], strand_to_y: [['L'], ['S+'], ['C+'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['L'], ['S+'], ['C-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-'], ['L'], ['S+'], ['C-']], strand_to_y: [['L'], ['S+'], ['C-'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['L'], ['S-'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-'], ['L'], ['S-'], ['C+']], strand_to_y: [['L'], ['S-'], ['C+'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['M'], ['O-'], ['L'], ['S-'], ['C-']], tensor_x[strand_x]: 2/25
+  strand_from_y: [['M'], ['O-'], ['L'], ['S-'], ['C-']], strand_to_y: [['L'], ['S-'], ['C-'], ['M'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 2/25
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['H'], ['S+'], ['C+']], tensor_x[strand_x]: 3/2000
+  strand_from_y: [['W'], ['O+'], ['H'], ['S+'], ['C+']], strand_to_y: [['H'], ['S+'], ['C+'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/2000
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['H'], ['S+'], ['C-']], tensor_x[strand_x]: 3/500
+  strand_from_y: [['W'], ['O+'], ['H'], ['S+'], ['C-']], strand_to_y: [['H'], ['S+'], ['C-'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/500
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['H'], ['S-'], ['C+']], tensor_x[strand_x]: 3/2000
+  strand_from_y: [['W'], ['O+'], ['H'], ['S-'], ['C+']], strand_to_y: [['H'], ['S-'], ['C+'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/2000
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['H'], ['S-'], ['C-']], tensor_x[strand_x]: 3/500
+  strand_from_y: [['W'], ['O+'], ['H'], ['S-'], ['C-']], strand_to_y: [['H'], ['S-'], ['C-'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/500
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['M'], ['S+'], ['C+']], tensor_x[strand_x]: 3/400
+  strand_from_y: [['W'], ['O+'], ['M'], ['S+'], ['C+']], strand_to_y: [['M'], ['S+'], ['C+'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/400
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['M'], ['S+'], ['C-']], tensor_x[strand_x]: 3/100
+  strand_from_y: [['W'], ['O+'], ['M'], ['S+'], ['C-']], strand_to_y: [['M'], ['S+'], ['C-'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/100
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['M'], ['S-'], ['C+']], tensor_x[strand_x]: 3/400
+  strand_from_y: [['W'], ['O+'], ['M'], ['S-'], ['C+']], strand_to_y: [['M'], ['S-'], ['C+'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/400
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['M'], ['S-'], ['C-']], tensor_x[strand_x]: 3/100
+  strand_from_y: [['W'], ['O+'], ['M'], ['S-'], ['C-']], strand_to_y: [['M'], ['S-'], ['C-'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/100
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['L'], ['S+'], ['C+']], tensor_x[strand_x]: 3/500
+  strand_from_y: [['W'], ['O+'], ['L'], ['S+'], ['C+']], strand_to_y: [['L'], ['S+'], ['C+'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/500
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['L'], ['S+'], ['C-']], tensor_x[strand_x]: 3/125
+  strand_from_y: [['W'], ['O+'], ['L'], ['S+'], ['C-']], strand_to_y: [['L'], ['S+'], ['C-'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/125
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['L'], ['S-'], ['C+']], tensor_x[strand_x]: 3/500
+  strand_from_y: [['W'], ['O+'], ['L'], ['S-'], ['C+']], strand_to_y: [['L'], ['S-'], ['C+'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/500
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O+'], ['L'], ['S-'], ['C-']], tensor_x[strand_x]: 3/125
+  strand_from_y: [['W'], ['O+'], ['L'], ['S-'], ['C-']], strand_to_y: [['L'], ['S-'], ['C-'], ['W'], ['O+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/125
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['H'], ['S+'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-'], ['H'], ['S+'], ['C+']], strand_to_y: [['H'], ['S+'], ['C+'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['H'], ['S+'], ['C-']], tensor_x[strand_x]: 7/400
+  strand_from_y: [['W'], ['O-'], ['H'], ['S+'], ['C-']], strand_to_y: [['H'], ['S+'], ['C-'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 7/400
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['H'], ['S-'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-'], ['H'], ['S-'], ['C+']], strand_to_y: [['H'], ['S-'], ['C+'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['H'], ['S-'], ['C-']], tensor_x[strand_x]: 7/400
+  strand_from_y: [['W'], ['O-'], ['H'], ['S-'], ['C-']], strand_to_y: [['H'], ['S-'], ['C-'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 7/400
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['M'], ['S+'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-'], ['M'], ['S+'], ['C+']], strand_to_y: [['M'], ['S+'], ['C+'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['M'], ['S+'], ['C-']], tensor_x[strand_x]: 7/80
+  strand_from_y: [['W'], ['O-'], ['M'], ['S+'], ['C-']], strand_to_y: [['M'], ['S+'], ['C-'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 7/80
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['M'], ['S-'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-'], ['M'], ['S-'], ['C+']], strand_to_y: [['M'], ['S-'], ['C+'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['M'], ['S-'], ['C-']], tensor_x[strand_x]: 7/80
+  strand_from_y: [['W'], ['O-'], ['M'], ['S-'], ['C-']], strand_to_y: [['M'], ['S-'], ['C-'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 7/80
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['L'], ['S+'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-'], ['L'], ['S+'], ['C+']], strand_to_y: [['L'], ['S+'], ['C+'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['L'], ['S+'], ['C-']], tensor_x[strand_x]: 7/100
+  strand_from_y: [['W'], ['O-'], ['L'], ['S+'], ['C-']], strand_to_y: [['L'], ['S+'], ['C-'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 7/100
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['L'], ['S-'], ['C+']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-'], ['L'], ['S-'], ['C+']], strand_to_y: [['L'], ['S-'], ['C+'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [], strand_to_x: [['W'], ['O-'], ['L'], ['S-'], ['C-']], tensor_x[strand_x]: 7/100
+  strand_from_y: [['W'], ['O-'], ['L'], ['S-'], ['C-']], strand_to_y: [['L'], ['S-'], ['C-'], ['W'], ['O-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 7/100
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/11
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 8/11
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/11
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/11
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/11
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 32/239
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 32/239
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 32/239
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 32/239
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 32/239
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/13
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 8/13
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/13
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/13
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/13
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 96/811
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 96/811
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 96/811
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 96/811
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 96/811
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 2/5
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 2/5
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 2/5
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 2/5
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 2/5
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/95
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 8/95
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/95
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/95
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['M'], ['O+']], tensor_x[strand_x]: 8/95
+  strand_from_y: [['M'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 160/239
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 160/239
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 160/239
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 160/239
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 160/239
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 480/811
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 480/811
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 480/811
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 480/811
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 480/811
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 8/19
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 8/19
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 8/19
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 8/19
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['M'], ['O-']], tensor_x[strand_x]: 8/19
+  strand_from_y: [['M'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 12/47
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 3/11
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 3/11
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 3/11
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/11
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 3/11
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/239
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/239
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/239
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 12/239
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/239
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 12/47
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 5/13
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 5/13
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 5/13
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 5/13
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 5/13
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 60/811
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 60/811
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 60/811
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 60/811
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 60/811
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 1
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 1
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 12/47
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/47
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 3/5
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 3/5
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 3/5
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 3/5
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 3/5
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/95
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/95
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/95
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO+']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 12/95
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['W'], ['O+']], tensor_x[strand_x]: 12/95
+  strand_from_y: [['W'], ['O+']], strand_to_y: [['WO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 35/47
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/239
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/239
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/239
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['H'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/239
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 35/239
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 35/47
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 175/811
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 175/811
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 175/811
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['M'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 175/811
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 175/811
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S+'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 35/47
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 35/47
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C+']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 0
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 7/19
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 7/19
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['MO-']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 7/19
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO+']], tensor_y[strand_y]: 0
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 0
+---
+  strand_from_x: [['L'], ['S-'], ['C-']], strand_to_x: [['W'], ['O-']], tensor_x[strand_x]: 7/19
+  strand_from_y: [['W'], ['O-']], strand_to_y: [['WO-']], tensor_y[strand_y]: 1
+tensor_x[strands][strand_x] * tensor_y[strands][strand_y]: 7/19
+[[['H'], ['S-'], ['C-']], [['MO+']]] 32/239
+[[['H'], ['S-'], ['C-']], [['MO-']]] 160/239
+[[['H'], ['S-'], ['C-']], [['WO+']]] 12/239
+[[['H'], ['S-'], ['C-']], [['WO-']]] 35/239
+[[['L'], ['S-'], ['C+']], [['MO+']]] 2/5
+[[['L'], ['S-'], ['C+']], [['MO-']]] 0
+[[['L'], ['S-'], ['C+']], [['WO+']]] 3/5
+[[['L'], ['S-'], ['C+']], [['WO-']]] 0
+[[['H'], ['S-'], ['C+']], [['MO+']]] 8/11
+[[['H'], ['S-'], ['C+']], [['MO-']]] 0
+[[['H'], ['S-'], ['C+']], [['WO+']]] 3/11
+[[['H'], ['S-'], ['C+']], [['WO-']]] 0
+[[['M'], ['S+'], ['C+']], [['MO+']]] 0
+[[['M'], ['S+'], ['C+']], [['MO-']]] 0
+[[['M'], ['S+'], ['C+']], [['WO+']]] 1
+[[['M'], ['S+'], ['C+']], [['WO-']]] 0
