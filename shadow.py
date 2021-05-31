@@ -261,7 +261,7 @@ def main():
         )
     )
     # profile:  [[['H', 'M', 'L'], ['S+', 'S-'], ['C+', 'C-']], [['M', 'W'], ['O+', 'O-']]]
-    # {[[['H'], ['S+'], ['C+']], [['M'], ['O+']]] 0
+    # [[['H'], ['S+'], ['C+']], [['M'], ['O+']]] 0
     # [[['H'], ['S+'], ['C-']], [['M'], ['O+']]] 0
     # [[['H'], ['S-'], ['C+']], [['M'], ['O+']]] 8/11
     # [[['H'], ['S-'], ['C-']], [['M'], ['O+']]] 32/239
@@ -376,8 +376,52 @@ def main():
     # [[['L'], ['S-'], ['C-']], [['WO+']]] 12/95
     # [[['L'], ['S-'], ['C-']], [['WO-']]] 7/19
 
-    # Problem 12. 
+    # Problem 12.
+    result = markov_tensor.composition(
+            markov_tensor.conversion(
+                tensor_p, 
+                markov_tensor.tensor_product(
+                    markov_tensor.composition(
+                        markov_tensor.delta([['M', 'W']]), 
+                        markov_tensor.tensor_product(tensor_h, tensor_s)
+                    ), 
+                    tensor_c
+                )
+            ), 
+            tensor_n
+        )
 
+    for key in result["strands"].keys():
+        if eval(key)[0] == [['H'], ['S-'], ['C-']]:
+            print(key, result["strands"][key])
+    # [[['H'], ['S-'], ['C-']], [['MO+']]] 32/239
+    # [[['H'], ['S-'], ['C-']], [['MO-']]] 160/239
+    # [[['H'], ['S-'], ['C-']], [['WO+']]] 12/239
+    # [[['H'], ['S-'], ['C-']], [['WO-']]] 35/239
+
+    for key in result["strands"].keys():
+        if eval(key)[0] == [['L'], ['S-'], ['C+']]:
+            print(key, result["strands"][key])
+    # [[['L'], ['S-'], ['C+']], [['MO+']]] 2/5
+    # [[['L'], ['S-'], ['C+']], [['MO-']]] 0
+    # [[['L'], ['S-'], ['C+']], [['WO+']]] 3/5
+    # [[['L'], ['S-'], ['C+']], [['WO-']]] 0
+
+    for key in result["strands"].keys():
+        if eval(key)[0] == [['H'], ['S-'], ['C+']]:
+            print(key, result["strands"][key])
+    # [[['H'], ['S-'], ['C+']], [['MO+']]] 8/11
+    # [[['H'], ['S-'], ['C+']], [['MO-']]] 0
+    # [[['H'], ['S-'], ['C+']], [['WO+']]] 3/11
+    # [[['H'], ['S-'], ['C+']], [['WO-']]] 0
+
+    for key in result["strands"].keys():
+        if eval(key)[0] == [['M'], ['S+'], ['C+']]:
+            print(key, result["strands"][key])
+    # [[['M'], ['S+'], ['C+']], [['MO+']]] 0
+    # [[['M'], ['S+'], ['C+']], [['MO-']]] 0
+    # [[['M'], ['S+'], ['C+']], [['WO+']]] 1
+    # [[['M'], ['S+'], ['C+']], [['WO-']]] 0
 
 if __name__ == "__main__":
     main()
