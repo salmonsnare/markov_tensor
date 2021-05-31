@@ -210,8 +210,7 @@ def composition_process(tensor_x, tensor_y, strand_x, strand_y, strands_result, 
         # 結合演算の結果のストランドの始点と終点の設定
         # キー strand_result はストランドの始点と終点を表す格子点を表す。
         strand_lattice_points = str([strand_from_x, strand_to_y])
-        mult = round(tensor_x["strands"][strand_x] *
-                     tensor_y["strands"][strand_y], 5)
+        mult = tensor_x["strands"][strand_x] * tensor_y["strands"][strand_y]
         if DEBUG:
             print("---")
             print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strand_x]: {2}".format(
@@ -248,8 +247,6 @@ def composition(tensor_x, tensor_y):
                     tensor_x, tensor_y, strand_x, strand_y, strands_result, tensor_result)
     else:
         print("cannot compose")
-    print("xxx!!!strands_result")
-    print(strands_result)
     tensor_result["strands"] = strands_result
 
     return tensor_result
@@ -321,8 +318,7 @@ def tensor_product_process(tensor_x, tensor_y, strand_x, strand_y, strands_resul
     strand_to.extend(strand_to_y)
 
     strand_lattice_points = str([strand_from, strand_to])
-    mult = round(tensor_x["strands"][strand_x] *
-                 tensor_y["strands"][strand_y], 5)
+    mult = tensor_x["strands"][strand_x] * tensor_y["strands"][strand_y]
     if DEBUG:
         print("---")
         print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strands][strand_x]: {2}".format(
@@ -495,8 +491,7 @@ def jointification_process(tensor_x, tensor_y, strand_x, strand_y, strands_resul
 
     if strand_to_x == strand_from_y:  # tensor_x のあるストランドの終点と、tensor_y のあるストランドの始点が一致した場合
         strand_lattice_points = str([strand_from, strand_to])
-        mult = round(tensor_x["strands"][strand_x] *
-                     tensor_y["strands"][strand_y], 5)
+        mult = tensor_x["strands"][strand_x] * tensor_y["strands"][strand_y]
         if DEBUG:
             print("---")
             print("  strand_from_x: {0}, strand_to_x: {1}, tensor_x[strands][strand_x]: {2}".format(
@@ -701,34 +696,6 @@ def conversion(tensor_empty_a, tensor_a_b):
     @param tensor_a_b テンソル G a -> b
     @return tensor_result テンソル b -> a
     """
-    print("!!!conversion start!!!")
-    print("!!!tensor_empty_a before!!!")
-    print_tensor(tensor_empty_a)
-    print("!!!tensor_a_b before!!!")
-    print_tensor(tensor_a_b)
-    print("-!!!!!start jointification")
-    print_tensor(jointification(tensor_empty_a, tensor_a_b))
-    print("-!!!!!end jointification")
-    print("-!!!start swap")
-    print_tensor(
-        swap( # Xa,b: a#b => b#a
-            tensor_a_b["profile"][DOMAIN_PROFILE], 
-            tensor_a_b["profile"][CODOMAIN_PROFILE]
-        )
-    )
-    print("-!!!end swap")
-    print("-!!!start composition")
-    print_tensor(
-        composition(
-            jointification(tensor_empty_a, tensor_a_b), # [] -> a, a -> b => [] -> a#b
-            swap( # Xa,b: a#b => b#a
-                tensor_a_b["profile"][DOMAIN_PROFILE], 
-                tensor_a_b["profile"][CODOMAIN_PROFILE]
-            )
-        ) # [] -> b#a
-    )
-    print("-!!!end composition")
-
     return conditionalization(
         composition(
             jointification(tensor_empty_a, tensor_a_b), # [] -> a, a -> b => [] -> a#b
@@ -898,8 +865,10 @@ def main():
         # tensor_product(tensor_label1, tensor_label2),
         # tensor_product(tensor_c, tensor_d),
         # tensor_product(tensor_domain_empty_list, tensor_d),
+        delta([2]),
         delta([2, 2]),
-        delta([['a', 'b']]),
+        delta([['a, b']]),
+        delta([['a, b'], ['c, d']]),
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result)  # テンソルを標準出力
