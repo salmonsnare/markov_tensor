@@ -11,6 +11,24 @@ Python によるマルコフ・テンソルの計算をするスクリプトで�
 - string_label.py: インデックスとして文字列のラベルをもつ計算例です。
 - shadow.py: 影絵クイズと呼ばれるクイズの計算例です。
 
+## markov_tensor.py で実装したメソッド
+テンソル計算: 
+- 結合演算: メソッド composition
+- 恒等射: メソッド identity
+- 部分結合: メソッド partial composition
+- 同時化: メソッド jointification
+- 条件化: メソッド conditionalization
+- テンソル積: メソッド tensor_product
+- 第一周辺化: メソッド first_marginalization
+- 第二周辺化: メソッド second_marginalization
+- 反転: メソッド: conversion
+
+テンソルを構成
+- 単位テンソル: メソッド unit_tensor
+- マルコフ・テンソル Δ: メソッド delta
+- マルコフ・テンソル ！: メソッド exclamation
+- マルコフ・テンソル Xa,b (スワップ): メソッド swap
+
 ## はじめに
 次のような行と列にインデックスをもつ表を考えます。
 
@@ -76,7 +94,7 @@ import markov_tensor // 結合演算 composition を用いるためにインポ�
 青  0.7 0.5
 """
 
-# 表1 の表現です。
+# 表1 の Python の辞書による表現です。
 tensor_ball = {
     "profile": [[['黒', '白']], [['赤', '緑', '青']]], 
     "strands": {
@@ -96,7 +114,7 @@ tensor_ball = {
 ランプが光らない  0.2 0.1 0.1
 """
 
-# 表2 の表現です。
+# 表2 の Python の辞書による表現です。
 tensor_lamp = {
     "profile": [[['赤', '緑', '青']], [['ランプが光る', 'ランプが光らない']]], 
     "strands": {
@@ -121,27 +139,10 @@ if __name__ == "__main__":
 
 次のような実行結果を得ます。
 
+```console
 profile:  [[['黒', '白']], [['ランプが光る', 'ランプが光らない']]]
 [[['黒']], [['ランプが光る']]] 89/100
 [[['黒']], [['ランプが光らない']]] 11/100
 [[['白']], [['ランプが光る']]] 22/25
 [[['白']], [['ランプが光らない']]] 3/25
-
-## 本スクリプトで実装したメソッド
-テンソル計算: 
-- 結合演算: メソッド composition
-- 恒等射: メソッド identity
-- 部分結合: メソッド partial composition
-- 同時化: メソッド jointification
-- 条件化: メソッド conditionalization
-- テンソル積: メソッド tensor_product
-- 第一周辺化: メソッド first_marginalization
-- 第二周辺化: メソッド second_marginalization
-- 反転: メソッド: conversion
-
-テンソルを構成
-- 単位テンソル: メソッド unit_tensor
-- マルコフ・テンソル Δ: メソッド delta
-- マルコフ・テンソル ！: メソッド exclamation
-- マルコフ・テンソル Xa,b (スワップ): メソッド swap
-
+```
