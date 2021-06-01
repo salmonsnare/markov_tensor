@@ -64,7 +64,7 @@ Python によるマルコフ・テンソルの計算をするスクリプトで�
 
 本スクリプトを用いて計算すると次のようになります。ball_lamp.py を参照ください。
 
----
+```Python
 from fractions import Fraction // 分数を取り扱うために Fraction をインポートします。
 import markov_tensor // 結合演算 composition を用いるためにインポートします。
 
@@ -96,6 +96,7 @@ tensor_ball = {
 ランプが光らない  0.2 0.1 0.1
 """
 
+```
 # 表2 の表現です。
 tensor_lamp = {
     "profile": [[['赤', '緑', '青']], [['ランプが光る', 'ランプが光らない']]], 
@@ -117,7 +118,7 @@ def main():
 if __name__ == "__main__":
     main()
 
----
+```
 
 次のような実行結果を得ます。
 
