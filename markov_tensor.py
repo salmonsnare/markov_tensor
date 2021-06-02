@@ -41,91 +41,6 @@ CODOMAIN_PROFILE = 1
 DOMAIN_LATTICE_POINT = 0
 CODOMAIN_LATTICE_POINT = 1
 
-
-def construct_label_index_dict(tensor_x):
-    """
-    文字列のラベルをもつようなプロファイルをもつテンソルから、文字列とインデックスを対応付ける。
-    @param tensor_x テンソル
-    @return domain_label_index 域について文字列のラベルとインデックスの辞書
-    @return codomain_label_index 余域について文字列のラベルとインデックスの辞書
-    """
-    domain_label_index = {}
-    codomain_label_index = {}
-
-    domain_profile = tensor_x["profile"][DOMAIN_PROFILE]
-    domain_index = 1
-    for item in domain_profile[0]:
-        domain_label_index[item] = domain_index
-        domain_index += 1
-
-    codomain_profile = tensor_x["profile"][CODOMAIN_PROFILE]
-    codomain_index = 1
-    for item in codomain_profile[0]:
-        codomain_label_index[item] = codomain_index
-        codomain_index += 1
-
-    return domain_label_index, codomain_label_index
-
-
-def convert_label2index(tensor_x):
-    """
-    文字列のラベルをもつようなプロファイルをもつテンソルから、
-    文字列のラベルをインデックスに変更したテンソルを構成
-    @param tensor_x テンソル
-    @return tensor_result 文字列のラベルをインデックスに変更したテンソル
-    @return domain_label_index 域について文字列のラベルとインデックスの辞書
-    @return codomain_label_index 余域について文字列のラベルとインデックスの辞書
-    [変換元]
-    tensor_x = {
-        "profile": [[['A', 'B']], [['H', 'M', 'L']]], 
-        "strands": {
-            "[['A'], ['H']]": Fraction(2, 10), 
-            "[['A'], ['M']]": Fraction(6, 10), 
-            "[['A'], ['L']]": Fraction(2, 10), 
-            "[['B'], ['H']]": Fraction(1, 10), 
-            "[['B'], ['M']]": Fraction(5, 10), 
-            "[['B'], ['L']]": Fraction(4, 10)
-        }
-    }
-    [変換先]
-    tensor_result = {
-        "profile": [[2], [3]], 
-        "strands": {
-            "[[1], [1]]": Fraction(2, 10), 
-            "[[1], [2]]": Fraction(6, 10), 
-            "[[1], [3]]": Fraction(2, 10), 
-            "[[2], [1]]": Fraction(1, 10), 
-            "[[2], [2]]": Fraction(5, 10), 
-            "[[2], [3]]": Fraction(4, 10)
-        }
-    }
-    """
-
-    tensor_result = {}
-    strands_result = {}
-    domain_label_index, codomain_label_index = construct_label_index_dict(
-        tensor_x)
-    domain_profile = tensor_x["profile"][DOMAIN_PROFILE]
-    codomain_profile = tensor_x["profile"][CODOMAIN_PROFILE]
-    tensor_result["profile"] = [
-        [len(domain_profile)], [len(codomain_profile)]
-    ]
-
-    for strand in tensor_x["strands"].keys():
-        strand_list = eval(strand)
-        converted_strand = str([
-            [domain_label_index[item]
-                for item in strand_list[DOMAIN_LATTICE_POINT]],
-            [codomain_label_index[item]
-                for item in strand_list[CODOMAIN_LATTICE_POINT]],
-        ])
-        strands_result[converted_strand] = tensor_x["strands"][strand]
-
-    tensor_result["strands"] = strands_result
-
-    return tensor_result, domain_label_index, codomain_label_index
-
-
 def get_lattice_points(strand):
     """
     格子点の情報を取得
@@ -872,10 +787,6 @@ def main():
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result)  # テンソルを標準出力
-
-    # tensor_result, domain_label_index, codomain_label_index = convert_label2index(
-    #     tensor_label1)
-    # print(tensor_result, domain_label_index, codomain_label_index)
 
 
 if __name__ == "__main__":
