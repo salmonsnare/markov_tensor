@@ -479,7 +479,7 @@ def conditionalization(tensor_x, concat_start_index):
         strand_lattice_points = str(
             [strand_to[0:concat_start_index - 1], strand_to[concat_start_index - 1:len(codomain_profile)]])
         strands_result[strand_lattice_points] = tensor_x["strands"][strand] / \
-            total[total_strand_from]
+            total[total_strand_from] # TODO: ゼロ除算に対応すること
     tensor_result["strands"] = strands_result
 
     return tensor_result

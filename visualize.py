@@ -120,3 +120,5 @@ fig.update_layout(
 )
 
 fig.show()
+
+print(markov_tensor.create_indexies([markov_tensor.create_n_bar(item) for item in [100, 100]]))
