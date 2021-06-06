@@ -1,10 +1,16 @@
-import plotly.graph_objects as go
+import streamlit as st
+# To make things easier later, we're also importing numpy and pandas for
+# working with sample data.
 import numpy as np
+import pandas as pd
+import plotly.graph_objects as go
 import random
 import markov_tensor
 from fractions import Fraction
 
-fig = go.Figure()
+st.title('拡散確率テーブル')
+st.sidebar.header("制御")
+st.sidebar.markdown("スライダー")
 
 tensor_m = {
     "profile": [[], [3, 2]],  
@@ -66,52 +72,27 @@ tensor_d = {
 }
 
 tensor_result = tensor_m
-for step in range(20):
-    val=[
-        [ 
-            tensor_result["strands"][str([[], [index_i + 1, index_j + 1]])] for index_i in range(tensor_result["profile"][1][0]) 
-        ] for index_j in range(tensor_result["profile"][1][1])
-    ]
-
-    fig.add_trace(
-            go.Heatmap(
-                z=val, 
-                colorscale = "Blues", 
-                colorbar=dict(
-                    tick0=0,
-                    dtick=1
-                ) 
-            )
-    )
-
+fig = go.Figure()
+step = st.sidebar.slider('ステップ数',  min_value=0, max_value=20, step=1, value=0)
+st.write("Step {0}".format(step))
+for item in range(step):
     tensor_result = markov_tensor.composition(tensor_result, tensor_d)
     markov_tensor.print_tensor(tensor_result)
-
-
-# Create and add slider
-steps = []
-for i in range(len(fig.data)):
-    step = dict(
-        method="update",
-        args=[{"visible": [False] * len(fig.data)},
-              {"title": "Slider switched to step: " + str(i)}],  # layout attribute
-    )
-    step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
-    steps.append(step)
-
-sliders = [dict(
-    active=0,
-    currentvalue={"prefix": "Frequency: "},
-    pad={"t": 50},
-    steps=steps
-)]
-
-fig.update_layout(
-    sliders=sliders,
-    width=800, 
-    height=500
+val=[
+    [ 
+        tensor_result["strands"][str([[], [index_i + 1, index_j + 1]])] for index_i in range(tensor_result["profile"][1][0]) 
+    ] for index_j in range(tensor_result["profile"][1][1])
+]
+fig.add_trace(
+        go.Heatmap(
+            z=val, 
+            colorscale = "Blues", 
+            colorbar=dict(
+                tick0=0,
+                dtick=1
+            ) 
+        )
 )
-
-fig.show()
+st.write(fig)
 
 # print(markov_tensor.create_indexies([markov_tensor.create_n_bar(item) for item in [100, 100]]))
