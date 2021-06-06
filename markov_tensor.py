@@ -479,7 +479,7 @@ def conditionalization(tensor_x, concat_start_index):
         strand_lattice_points = str(
             [strand_to[0:concat_start_index - 1], strand_to[concat_start_index - 1:len(codomain_profile)]])
         strands_result[strand_lattice_points] = tensor_x["strands"][strand] / \
-            total[total_strand_from] # TODO: ゼロ除算に対応すること
+            (total[total_strand_from] if total[total_strand_from] > 0 else 99999) # TODO: ゼロ除算に対応すること
     tensor_result["strands"] = strands_result
 
     return tensor_result
@@ -764,6 +764,28 @@ def main():
         }
     }
 
+    tensor_conditinalization_a = {
+        "profile": [[], [2, 2]],
+        "strands": {
+            "[[], [1, 1]]": Fraction(1, 2),
+            "[[], [1, 2]]": Fraction(1, 2),
+            "[[], [2, 1]]": 0,
+            "[[], [2, 2]]": 0
+        }
+    }
+
+    tensor_conditinalization_b = {
+        "profile": [[], [2, 2]],
+        "strands": {
+            "[[], [1, 1]]": Fraction(1, 4),
+            "[[], [1, 2]]": Fraction(1, 4),
+            "[[], [2, 1]]": Fraction(1, 4),
+            "[[], [2, 2]]": Fraction(1, 4)
+        }
+    }
+
+
+
     # テンソル計算
     for tensor_result in [
         composition(tensor_a, tensor_b),
@@ -784,6 +806,8 @@ def main():
         delta([2, 2]),
         delta([['a, b']]),
         delta([['a, b'], ['c, d']]),
+        conditionalization(tensor_conditinalization_a, 2), 
+        conditionalization(tensor_conditinalization_b, 2), 
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result)  # テンソルを標準出力
