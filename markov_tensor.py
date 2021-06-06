@@ -808,6 +808,7 @@ def main():
         delta([['a, b'], ['c, d']]),
         conditionalization(tensor_conditinalization_a, 2), 
         conditionalization(tensor_conditinalization_b, 2), 
+        swap([2], [3])
     ]:
         is_markov(tensor_result)    # マルコフ性のチェック
         print_tensor(tensor_result)  # テンソルを標準出力
